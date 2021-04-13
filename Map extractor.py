@@ -1,7 +1,13 @@
-from romh import*
+from romh import *
+from mape import *
+from Value import *
 filename = "BPRE0.gba"
-f = open(filename, "rb")
 
-map()
-for i in range(0,43):
-    print(bank [i])
+
+hexrom = openRomRead(filename)
+for i in range (0,43):
+    bankp[i] = readRomData(hexrom, listadre[i], 3)
+    for x in range (0,43):
+        depointbank(x)
+
+print(bankp)
