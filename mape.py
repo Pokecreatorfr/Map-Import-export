@@ -3,4 +3,5 @@ bankadress ["3526A8","3526AC","3526B0","3526B4","3526B8","3526BC","3526C0,","352
 
 def map() :
     for i in range(0,43):
-        Bank[i] == 
+        readRomByte((bankadress[i]+(1*i)),3)
+        bank[i] = data
