@@ -1,6 +1,4 @@
 from romh import *
-from Value import *
-from mapextractor import *
 
 def depointl(point,x):
     hexv = point[x]
@@ -10,7 +8,3 @@ def ajouthexl(list,x,y):
     for i in range(x):
         hexv = conv_hex2dec(list[x])+y
         list[x] = conv_dec2hex(hexv)
-
-def readbank(rom):
-    for i in range(43):
-        bankp[i] = readRomData(rom, listadre[i], 3)
