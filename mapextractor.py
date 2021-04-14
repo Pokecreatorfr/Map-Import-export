@@ -16,5 +16,35 @@ for x in range(43):
     for i in range(nmap):
         mapp[i] = conv_hex2dec(bankp[x])+4*i
         mapp[i] = conv_dec2hex(mapp[i])
-print(bankp)
-print(mapp)
+        hexv = mapp[i]
+        #read block
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        vardec = conv_hex2dec(varadr) + 16
+        varadr = conv_dec2hex(vardec)
+        block = readRomData(hexrom, varadr, 12)
+        #read largeurh and hauteurh
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        largeurh = readRomData(hexrom, varadr, 4)
+        vardec = conv_hex2dec(varadr) + 4
+        varadr = conv_dec2hex(vardec)
+        hauteurh = readRomData(hexrom, varadr, 4)
+        largeurh = largeurh.decode(encoding="utf-8")
+        hauteurh = hauteurh.decode(encoding="utf-8")
+        largueurd = conv_hex2dec(largeurh[0:2])
+        hauteurd = conv_hex2dec(hauteurh[0:2])
+        mapcollseize = largueurd * hauteurd * 3
+        vardec = conv_hex2dec(varadr) + 4
+        varadr = conv_dec2hex(vardec)
+        mapcoll = readRomData(hexrom, varadr, mapcollseize)
+        print(hauteurd,largeurh)
+    print(mapp)
+    print(bankp)
+#print(bankp)
+#print(mapp)
