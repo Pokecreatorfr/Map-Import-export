@@ -39,11 +39,14 @@ for x in range(43):
         hauteurh = hauteurh.decode(encoding="utf-8")
         largueurd = conv_hex2dec(largeurh[0:2])
         hauteurd = conv_hex2dec(hauteurh[0:2])
-        mapcollseize = largueurd * hauteurd * 3
-        vardec = conv_hex2dec(varadr) + 4
+        mapcollseize = largueurd * hauteurd * 2
+        vardec = conv_hex2dec(varadr) + 8
         varadr = conv_dec2hex(vardec)
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
         mapcoll = readRomData(hexrom, varadr, mapcollseize)
-        print(hauteurd,largeurh)
+        print(mapcoll)
     print(mapp)
     print(bankp)
 #print(bankp)
