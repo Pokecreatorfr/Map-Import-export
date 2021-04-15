@@ -76,7 +76,13 @@ for x in range(43):
         tileset2d = (vardec3 - tilesetstart) / 24
         varhex2 = conv_dec2hex(int(tileset1d))
         varhex3 = conv_dec2hex(int(tileset2d))
-        print(varhex2 , varhex3)
+        if len(varhex2) == 1:
+            varhex2 = "0" + varhex2
+        if len(varhex3) == 1:
+            varhex3 = "0" + varhex3
+        tileset1 = varhex2 + "000000"
+        tileset2 = varhex3 + "000000"
+        print(tileset1 , tileset2)
     print(mapp)
     print(bankp)
 #print(bankp)
