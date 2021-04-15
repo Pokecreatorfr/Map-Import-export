@@ -82,7 +82,23 @@ for x in range(43):
             varhex3 = "0" + varhex3
         tileset1 = varhex2 + "000000"
         tileset2 = varhex3 + "000000"
-        print(tileset1 , tileset2)
+        #Read bodure block informations
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        vardec = conv_hex2dec(varadr) + 24
+        varadr = conv_dec2hex(vardec)
+        largbordh = readRomByte(hexrom, varadr)
+        largbordh = largbordh.decode(encoding="utf-8")
+        largbordd = conv_hex2dec(largbordh)
+        vardec = conv_hex2dec(varadr) + 1
+        varadr = conv_dec2hex(vardec)
+        hautbordh = readRomByte(hexrom, varadr)
+        hautbordd = conv_hex2dec(largbordh)
+        print(hautbordd)
     print(mapp)
     print(bankp)
 #print(bankp)
