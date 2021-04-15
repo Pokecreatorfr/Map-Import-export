@@ -18,58 +18,35 @@ for x in range(43):
         mapp[i] = conv_dec2hex(mapp[i])
         hexv = mapp[i]
         #read block
-        var
-        vardec = conv_hex2dec(varadr) + 16
-        varadr = conv_dec2hex(vardec)
+        varadr = readpointer(hexrom,hexc)
+        varadr = add2hex(varadr, 16)
         block = readRomData(hexrom, varadr, 12)
         #read largeurh and hauteurh
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = readpointer(hexrom, hexv)
+        varadr = readpointer(hexrom, varadr)
         largeurh = readRomData(hexrom, varadr, 4)
-        vardec = conv_hex2dec(varadr) + 4
-        varadr = conv_dec2hex(vardec)
+        varadr = add2hex(varadr, 4)
         hauteurh = readRomData(hexrom, varadr, 4)
         largeurh = largeurh.decode(encoding="utf-8")
         hauteurh = hauteurh.decode(encoding="utf-8")
         largueurd = conv_hex2dec(largeurh[0:2])
         hauteurd = conv_hex2dec(hauteurh[0:2])
         mapcollseize = largueurd * hauteurd * 2
-        vardec = conv_hex2dec(varadr) + 8
-        varadr = conv_dec2hex(vardec)
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
+        varadr = add2hex(varadr, 8)
+        varadr = readpointer(hexrom, varadr)
         mapcoll = readRomData(hexrom, varadr, mapcollseize)
         mapcoll = mapcoll.decode(encoding="utf-8")
         # Read tileset informations*
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        vardec = conv_hex2dec(varadr) + 16
-        varadr = conv_dec2hex(vardec)
-        varadr2 = readRomData(hexrom, varadr, 3)
-        varadr2 = varadr2[4:6] + varadr2[2:4] + varadr2[0:2]
-        varadr2 = varadr2.decode(encoding="utf-8")
+        varadr = readpointer(hexrom, hexv)
+        varadr = readpointer(hexrom, varadr)
+        varadr = add2hex(varadr, 16)
+        varadr2 = readpointer(hexrom, varadr)
         vardec2 = conv_hex2dec(varadr2)
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        vardec = conv_hex2dec(varadr) + 20
-        varadr = conv_dec2hex(vardec)
-        varadr4 = readRomData(hexrom, varadr, 3)
-        varadr4 = varadr4[4:6] + varadr4[2:4] + varadr4[0:2]
-        varadr4 = varadr4.decode(encoding="utf-8")
-        vardec3 = conv_hex2dec(varadr4)
+        varadr = readpointer(hexrom, hexv)
+        varadr = readpointer(hexrom, varadr)
+        varadr = add2hex(varad, 20)
+        varadr3 = readpointer(hexrom, varadr)
+        vardec3 = conv_hex2dec(varadr3)
         tileset1d = (vardec2 - tilesetstart) / 24
         tileset2d = (vardec3 - tilesetstart) / 24
         varhex2 = conv_dec2hex(int(tileset1d))
@@ -81,14 +58,9 @@ for x in range(43):
         tileset1 = varhex2 + "000000"
         tileset2 = varhex3 + "000000"
         #Read bodure block informations
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        vardec = conv_hex2dec(varadr) + 24
-        varadr = conv_dec2hex(vardec)
+        varadr = readpointer(hexrom, hexv)
+        varadr = readpointer(hexrom, varadr)
+        varadr = add2hex(varhex, 24)
         largbordh = readRomByte(hexrom, varadr)
         largbordh = largbordh.decode(encoding="utf-8")
         largbordd = conv_hex2dec(largbordh)
@@ -104,11 +76,10 @@ for x in range(43):
         varadr = readRomData(hexrom, varadr, 3)
         varadr = varadr.decode(encoding="utf-8")
         varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        vardec = conv_hex2dec(varadr) + 8
+        vardec = conv_hex2dec(varadr) + 16
         varadr = conv_dec2hex(vardec)
         varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+
         blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
         print(blockbord)
     print(mapp)
