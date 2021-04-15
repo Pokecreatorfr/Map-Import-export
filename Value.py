@@ -19,6 +19,7 @@ hautbordd = 0
 GC = "42 50 52 45"
 Scriptdata = "0"
 block = "0"
+blockbord = "0"
 mapcoll = "0"
 mapevent = "0"
 mapscript = "0"
