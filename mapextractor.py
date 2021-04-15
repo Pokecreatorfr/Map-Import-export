@@ -18,7 +18,7 @@ for x in range(43):
         mapp[i] = conv_dec2hex(mapp[i])
         hexv = mapp[i]
         #read block
-        varadr = readpointer(hexrom,hexc)
+        varadr = readpointer(hexrom,hexv)
         varadr = add2hex(varadr, 16)
         block = readRomData(hexrom, varadr, 12)
         #read largeurh and hauteurh
@@ -44,7 +44,7 @@ for x in range(43):
         vardec2 = conv_hex2dec(varadr2)
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
-        varadr = add2hex(varad, 20)
+        varadr = add2hex(varadr, 20)
         varadr3 = readpointer(hexrom, varadr)
         vardec3 = conv_hex2dec(varadr3)
         tileset1d = (vardec2 - tilesetstart) / 24
@@ -60,28 +60,25 @@ for x in range(43):
         #Read bodure block informations
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
-        varadr = add2hex(varhex, 24)
+        varadr = readpointer(hexrom, varadr)
+        varadr = add2hex(varadr, 24)
         largbordh = readRomByte(hexrom, varadr)
         largbordh = largbordh.decode(encoding="utf-8")
         largbordd = conv_hex2dec(largbordh)
-        vardec = conv_hex2dec(varadr) + 1
-        varadr = conv_dec2hex(vardec)
+        varadr = add2hex(varadr, 1)
         hautbordh = readRomByte(hexrom, varadr)
+        hautbordh= hautbordh.decode(encoding="utf-8")
         hautbordd = conv_hex2dec(largbordh)
         size = hautbordd * largbordd * 2
         #Read bodure block
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = readRomData(hexrom, varadr, 3)
-        varadr = varadr.decode(encoding="utf-8")
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = readpointer(hexrom, hexv)
+        varadr = readpointer(hexrom, varadr)
         vardec = conv_hex2dec(varadr) + 16
         varadr = conv_dec2hex(vardec)
         varadr = readRomData(hexrom, varadr, 3)
 
-        blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
-        print(blockbord)
+        #blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
+        print(largbordh)
     print(mapp)
     print(bankp)
 #print(bankp)

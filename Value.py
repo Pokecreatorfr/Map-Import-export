@@ -34,7 +34,7 @@ vardec4 = 0
 varhex = "0"
 varhex2 = "0"
 varhex3 = "0"
-varhex4
+varhex4 = "0"
 mapcollseize = 0
 tilesetstart = 2968212
 size = 0
