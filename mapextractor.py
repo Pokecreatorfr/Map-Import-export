@@ -47,8 +47,36 @@ for x in range(43):
         varadr = varadr.decode(encoding="utf-8")
         mapcoll = readRomData(hexrom, varadr, mapcollseize)
         mapcoll = mapcoll.decode(encoding="utf-8")
-        
-        print(mapcoll)
+        # Read tileset informations*
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        vardec = conv_hex2dec(varadr) + 16
+        varadr = conv_dec2hex(vardec)
+        varadr2 = readRomData(hexrom, varadr, 3)
+        varadr2 = varadr2[4:6] + varadr2[2:4] + varadr2[0:2]
+        varadr2 = varadr2.decode(encoding="utf-8")
+        vardec2 = conv_hex2dec(varadr2)
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        vardec = conv_hex2dec(varadr) + 20
+        varadr = conv_dec2hex(vardec)
+        varadr3 = readRomData(hexrom, varadr, 3)
+        varadr3 = varadr3[4:6] + varadr3[2:4] + varadr3[0:2]
+        varadr3 = varadr3.decode(encoding="utf-8")
+        vardec3 = conv_hex2dec(varadr3)
+        tileset1d = (vardec2 - tilesetstart) / 24
+        tileset2d = (vardec3 - tilesetstart) / 24
+        varhex2 = conv_dec2hex(int(tileset1d))
+        varhex3 = conv_dec2hex(int(tileset2d))
+        print(varhex2 , varhex3)
     print(mapp)
     print(bankp)
 #print(bankp)
