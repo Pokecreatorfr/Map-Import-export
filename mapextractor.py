@@ -46,6 +46,8 @@ for x in range(43):
         varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
         varadr = varadr.decode(encoding="utf-8")
         mapcoll = readRomData(hexrom, varadr, mapcollseize)
+        mapcoll = mapcoll.decode(encoding="utf-8")
+        
         print(mapcoll)
     print(mapp)
     print(bankp)
