@@ -18,9 +18,7 @@ for x in range(43):
         mapp[i] = conv_dec2hex(mapp[i])
         hexv = mapp[i]
         #read block
-        varadr = readRomData(hexrom, hexv, 3)
-        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
-        varadr = varadr.decode(encoding="utf-8")
+        var
         vardec = conv_hex2dec(varadr) + 16
         varadr = conv_dec2hex(vardec)
         block = readRomData(hexrom, varadr, 12)
@@ -68,10 +66,10 @@ for x in range(43):
         varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
         vardec = conv_hex2dec(varadr) + 20
         varadr = conv_dec2hex(vardec)
-        varadr3 = readRomData(hexrom, varadr, 3)
-        varadr3 = varadr3[4:6] + varadr3[2:4] + varadr3[0:2]
-        varadr3 = varadr3.decode(encoding="utf-8")
-        vardec3 = conv_hex2dec(varadr3)
+        varadr4 = readRomData(hexrom, varadr, 3)
+        varadr4 = varadr4[4:6] + varadr4[2:4] + varadr4[0:2]
+        varadr4 = varadr4.decode(encoding="utf-8")
+        vardec3 = conv_hex2dec(varadr4)
         tileset1d = (vardec2 - tilesetstart) / 24
         tileset2d = (vardec3 - tilesetstart) / 24
         varhex2 = conv_dec2hex(int(tileset1d))
@@ -98,7 +96,21 @@ for x in range(43):
         varadr = conv_dec2hex(vardec)
         hautbordh = readRomByte(hexrom, varadr)
         hautbordd = conv_hex2dec(largbordh)
-        print(hautbordd)
+        size = hautbordd * largbordd * 2
+        #Read bodure block
+        varadr = readRomData(hexrom, hexv, 3)
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        vardec = conv_hex2dec(varadr) + 8
+        varadr = conv_dec2hex(vardec)
+        varadr = readRomData(hexrom, varadr, 3)
+        varadr = varadr.decode(encoding="utf-8")
+        varadr = varadr[4:6] + varadr [2:4] + varadr[0:2]
+        blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
+        print(blockbord)
     print(mapp)
     print(bankp)
 #print(bankp)

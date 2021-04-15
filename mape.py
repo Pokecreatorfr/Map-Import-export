@@ -1,10 +1,12 @@
 from romh import *
 
-def depointl(point,x):
-    hexv = point[x]
-    point[x] = hexv[4:6] + hexv [2:4] + hexv[0:2]
+def readpointer(rom, adress):
+    functionhexvar = readRomData(rom, adress, 3)
+    functionhexvar = functionhexvar[4:6] + functionhexvar[2:4] + functionhexvar[0:2]
+    functionhexvar = functionhexvar.decode(encoding="utf-8")
+    return functionhexvar
 
-def ajouthexl(list,x,y):
-    for i in range(x):
-        hexv = conv_hex2dec(list[x])+y
-        list[x] = conv_dec2hex(hexv)
+def add2hex(hex, numb):
+    functionvar = conv_hex2dec(hex) + numb
+    functionhexvar = conv_dec2hex(functionvar)
+    return functionhexvar

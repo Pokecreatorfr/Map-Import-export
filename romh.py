@@ -91,7 +91,3 @@ def insertSpacesBetweenBytes(hexstring):
         pos = i * 2
         new += hexstring[pos:pos + 2] + " "
     return new
-
-def depointl(point,x):
-    hexv = point[x]
-    point[x] = hexv[4:6] + hexv [2:4] + hexv[0:2]

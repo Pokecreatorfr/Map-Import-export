@@ -26,11 +26,17 @@ mapscript = "0"
 varadr = "0"
 varadr2 = "0"
 varadr3 = "0"
+varadr4 = "0"
 vardec = 0
 vardec2 = 0
 vardec3 = 0
+vardec4 = 0
 varhex = "0"
 varhex2 = "0"
 varhex3 = "0"
+varhex4
 mapcollseize = 0
 tilesetstart = 2968212
+size = 0
+functionvar = 0
+functionhexvar = 0
