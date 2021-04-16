@@ -60,7 +60,6 @@ for x in range(43):
         #Read bodure block informations
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
-        varadr = readpointer(hexrom, varadr)
         varadr = add2hex(varadr, 24)
         largbordh = readRomByte(hexrom, varadr)
         largbordh = largbordh.decode(encoding="utf-8")
@@ -68,18 +67,16 @@ for x in range(43):
         varadr = add2hex(varadr, 1)
         hautbordh = readRomByte(hexrom, varadr)
         hautbordh= hautbordh.decode(encoding="utf-8")
-        hautbordd = conv_hex2dec(largbordh)
-        size = hautbordd * largbordd * 2
+        hautbordd = conv_hex2dec(hautbordh)
+        size = (hautbordd * largbordd) * 2
         #Read bodure block
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
-        vardec = conv_hex2dec(varadr) + 16
-        varadr = conv_dec2hex(vardec)
-        varadr = readRomData(hexrom, varadr, 3)
-
-        #blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
-        print(largbordh)
-    print(mapp)
+        varadr = add2hex(varadr, 8)
+        varadr = readpointer(hexrom, varadr)
+        blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
+        print(blockbord)
+    #print(mapp)
     print(bankp)
 #print(bankp)
 #print(mapp)
