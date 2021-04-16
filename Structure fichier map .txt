@@ -21,4 +21,5 @@ personage = nbscriptpnj * 24
 warp = nbwarp * 8
 script =  nbscript * 16
 pancarte = nbpancarte * 12
-(FIN du bloc precedent)-(FIN du Fichier)= Données Scripts carte
+(FIN du bloc precedent)-(FIN du bloc)= Données Scripts carte
+(FIN du bloc precedent)-(FIN du bloc)= Données connexions map ( longueur = nbconnexions*2 +4)

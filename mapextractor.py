@@ -117,6 +117,11 @@ for x in range(43):
         varhex2 = varhex2 = varhex2.decode(encoding="utf-8")
         mapevent = mapevent + varhex2
         mapevent = mapevent + pnjscripth + warph + scripth + pancarteh
+        # Read connection informations
+        varadr = readpointer(hexrom, hexv)
+        varadr = add2hex(varadr, 4)
+        varadr = readpointer(hexrom, varadr)
+        
         print(mapevent, pnjscripth, warph, scripth, pancarteh)
 
     #print(mapp)
