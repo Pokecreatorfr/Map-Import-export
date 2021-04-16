@@ -75,7 +75,50 @@ for x in range(43):
         varadr = add2hex(varadr, 8)
         varadr = readpointer(hexrom, varadr)
         blockbord = readRomData(hexrom, varadr, size).decode(encoding="utf-8")
-        print(blockbord)
+        #Read event
+        varadr = readpointer(hexrom, hexv)
+        varadr = add2hex(varadr, 4)
+        varadr = readpointer(hexrom, varadr)
+        pnjscripth = readRomByte(hexrom, varadr)
+        varadr = add2hex(varadr, 1)
+        warph = readRomByte(hexrom, varadr)
+        varadr = add2hex(varadr, 1)
+        scripth = readRomByte(hexrom, varadr)
+        varadr = add2hex(varadr, 1)
+        pancarteh = readRomByte(hexrom, varadr)
+        pnjscripth = pnjscripth.decode(encoding="utf-8")
+        warph = warph.decode(encoding="utf-8")
+        scripth = scripth.decode(encoding="utf-8")
+        pancarteh = pancarteh.decode(encoding="utf-8")
+        pnjscriptd = conv_hex2dec(pnjscripth)
+        warpd = conv_hex2dec(warph)
+        scriptd = conv_hex2dec(scripth)
+        pancarted = conv_hex2dec(pancarteh)
+        varadr = add2hex(varadr, 1)
+        varadr2 = readpointer(hexrom, varadr)
+        size = pnjscriptd * 24
+        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = varhex2.decode(encoding="utf-8")
+        mapevent = varhex2
+        varadr = add2hex(varadr, 4)
+        varadr2 = readpointer(hexrom, varadr)
+        size = warpd * 8
+        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = varhex2.decode(encoding="utf-8")
+        mapevent = mapevent + varhex2
+        size= scriptd * 16
+        varadr2 = add2hex(varadr, 4)
+        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = varhex2.decode(encoding="utf-8")
+        mapevent = mapevent + varhex2
+        size = pancarted * 12
+        varadr2 = add2hex(varadr, 4)
+        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = varhex2 = varhex2.decode(encoding="utf-8")
+        mapevent = mapevent + varhex2
+        mapevent = mapevent + pnjscripth + warph + scripth + pancarteh
+        print(mapevent, pnjscripth, warph, scripth, pancarteh)
+
     #print(mapp)
     print(bankp)
 #print(bankp)

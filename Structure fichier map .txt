@@ -2,13 +2,13 @@
 00000004-00000007=Hauteur
 00000008-0000000B= Tileset 1
 0000000C-0000000F = Tileset 2
-00000010= largeur bloc de bordure 
+00000010= largeur bloc de bordure
 00000011= hauteur bloc de bordure
 00000014-00000017= GAMECODE
 00000020-00000024= Bloc de données relatif aux scripts de carte ???
 00000028-00000033= bloc de données composé de :
 
-00000028-00000029= Numéro Musique 
+00000028-00000029= Numéro Musique
 0000002D= Octet de grotte
 0000002E = Météo
 0000002F = Type de map ( ville, route ...)
@@ -16,5 +16,9 @@
 
 00000034-(Fin du bloc) = Bloc de bordure ( longueur = largeur bloc de bordure*hauteur bloc de bordure*2)
 (Fin du bloc precedent)-(FIN du bloc)= Données maps et mouvements (  longueur = largeur*hauteur*2)
-(FIN du bloc precedent)-(FIN du bloc)= Données evenements
+(FIN du bloc precedent)-(FIN du bloc)= Données evenements:
+personage = nbscriptpnj * 24
+warp = nbwarp * 8
+script =  nbscript * 16
+pancarte = nbpancarte * 12
 (FIN du bloc precedent)-(FIN du Fichier)= Données Scripts carte
