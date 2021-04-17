@@ -119,10 +119,21 @@ for x in range(43):
         mapevent = mapevent + pnjscripth + warph + scripth + pancarteh
         # Read connection informations
         varadr = readpointer(hexrom, hexv)
-        varadr = add2hex(varadr, 4)
+        varadr = add2hex(varadr, 12)
         varadr = readpointer(hexrom, varadr)
-        
-        print(mapevent, pnjscripth, warph, scripth, pancarteh)
+        if varadr != "000000":
+            print(varadr)
+            connectionh = readRomData(hexrom, varadr, 4)
+            connectionh = connectionh.decode(encoding="utf-8")
+            connectiond = conv_hex2dec(connectionh[0:2])
+            size = connectiond * 12
+            varadr = add2hex(varadr, 4)
+            varadr = readpointer(hexrom, varadr)
+            mapconnections = readRomData(hexrom, varadr, size)
+            mapconnections = mapconnections.decode(encoding="utf-8")
+            mapconnections = mapconnections + connectionh
+        else :
+            mapconnections = ""
 
     #print(mapp)
     print(bankp)
