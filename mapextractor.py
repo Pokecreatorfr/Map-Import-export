@@ -134,6 +134,7 @@ for x in range(43):
             mapconnections = mapconnections + connectionh
         else :
             mapconnections = ""
+        
 
     #print(mapp)
     print(bankp)
