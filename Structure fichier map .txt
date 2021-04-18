@@ -4,8 +4,9 @@
 0000000C-0000000F = Tileset 2
 00000010= largeur bloc de bordure
 00000011= hauteur bloc de bordure
-00000014-00000017= GAMECODE
-00000020-00000024= Bloc de données relatif aux scripts de carte ???
+00000014-00000017= GAMECODE+4
+00000020-00000023= Bloc de données relatif aux scripts de carte ???
+00000024-00000025= taille du fichier -7 ( inversé)
 00000028-00000033= bloc de données composé de :
 
 00000028-00000029= Numéro Musique
@@ -23,3 +24,4 @@ script =  nbscript * 16
 pancarte = nbpancarte * 12
 (FIN du bloc precedent)-(FIN du bloc)= Données Scripts carte
 (FIN du bloc precedent)-(FIN du bloc)= Données connexions map ( longueur = nbconnexions*12 +4)
+(Fin du fichier - 4) - (fin du fichier - 2) = Adresse du debut du block de connexion ( inversé)
