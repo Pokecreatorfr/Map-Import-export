@@ -208,7 +208,7 @@ for x in range(43):
         if len(varhex2) == 2 :
             varhex2 = '00' + varhex2
         varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
-        mapfilefinal = mapfilepart1 + varhex + mapfilepart2 + mapfilepart3
+        mapfilefinal = mapfilepart1 + varhex2 + mapfilepart2 + mapfilepart3
         print(mapfilefinal)
 
     #print(mapp)
