@@ -23,6 +23,7 @@ personage = nbscriptpnj * 24
 warp = nbwarp * 8
 script =  nbscript * 16
 pancarte = nbpancarte * 12
+scriptnb ( 1 byte pour chaque type)
 adresse scripts ( inversé)+00 00 * 4(un par type de script)
 
 (FIN du bloc precedent)-(FIN du bloc)= Données Scripts carte
