@@ -138,7 +138,7 @@ for x in range(43):
         else :
             mapconnections = ""
         #build map file
-        mapfilepart1 = largeurh + hauteurh + tileset1 + tileset2 + largbordh + hautbordh + '0000'+ GC + '34000000'
+        mapfilepart1 = largeurh + hauteurh + tileset1 + tileset2 + largbordh + hautbordh + 'c300'+ GC + '34000000'
         mapfilepart2 = block + blockbord + mapcoll
         mapfilepart3 = mapevent
         vardec2 = len(mapfilepart1) - 2 + 24 + len(mapfilepart2) + len(mapfilepart3)
@@ -186,7 +186,30 @@ for x in range(43):
             varhex2 = '00' + varhex2
         varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
         mapfilepart3 = mapfilepart3 + varhex2
-        print(mapfilepart1)
+        vardec2 = len(mapfilepart1) - 2 + 8 + len(mapfilepart2) + len(mapfilepart3)
+        vardec2 = vardec2/2
+        vardec2 = vardec2 + 1
+        vardec2 = int(vardec2)
+        varhex2 = conv_dec2hex(vardec2)
+        if len(varhex2) == 3 :
+            varhex2 = '0' + varhex2
+        if len(varhex2) == 2 :
+            varhex2 = '00' + varhex2
+        varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
+        mapconnections = mapconnections + varhex2
+        mapfilepart3 = mapfilepart3 + mapconnections
+        vardec2 = len(mapfilepart1) - 2 + 8 + len(mapfilepart2) + len(mapfilepart3)
+        vardec2 = vardec2/2
+        vardec2 = vardec2 + 1 - 8
+        vardec2 = int(vardec2)
+        varhex2 = conv_dec2hex(vardec2)
+        if len(varhex2) == 3 :
+            varhex2 = '0' + varhex2
+        if len(varhex2) == 2 :
+            varhex2 = '00' + varhex2
+        varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
+        mapfilefinal = mapfilepart1 + varhex + mapfilepart2 + mapfilepart3
+        print(varhex2)
 
     #print(mapp)
     print(bankp)

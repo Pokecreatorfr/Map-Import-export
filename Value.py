@@ -54,6 +54,7 @@ pancarted = 0
 mapfilepart1 = '0'
 mapfilepart2 = '0'
 mapfilepart3 = '0'
+mapfilefinal = '0'
 eventpoint = '0'
 sizepnj = 0
 sizewarp = 0
