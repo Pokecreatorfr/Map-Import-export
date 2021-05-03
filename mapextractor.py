@@ -21,6 +21,7 @@ for x in range(43):
         varadr = readpointer(hexrom,hexv)
         varadr = add2hex(varadr, 16)
         block = readRomData(hexrom, varadr, 12)
+        block = block.decode(encoding="utf-8")
         #read largeurh and hauteurh
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
@@ -96,24 +97,24 @@ for x in range(43):
         pancarted = conv_hex2dec(pancarteh)
         varadr = add2hex(varadr, 1)
         varadr2 = readpointer(hexrom, varadr)
-        size = pnjscriptd * 24
-        varhex2 = readRomData(hexrom, varadr2, size)
+        sizepnj = pnjscriptd * 24
+        varhex2 = readRomData(hexrom, varadr2, sizepnj)
         varhex2 = varhex2.decode(encoding="utf-8")
         mapevent = varhex2
         varadr = add2hex(varadr, 4)
         varadr2 = readpointer(hexrom, varadr)
-        size = warpd * 8
-        varhex2 = readRomData(hexrom, varadr2, size)
+        sizewarp = warpd * 8
+        varhex2 = readRomData(hexrom, varadr2, sizewarp)
         varhex2 = varhex2.decode(encoding="utf-8")
         mapevent = mapevent + varhex2
-        size= scriptd * 16
+        sizescript = scriptd * 16
         varadr2 = add2hex(varadr, 4)
-        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = readRomData(hexrom, varadr2, sizescript)
         varhex2 = varhex2.decode(encoding="utf-8")
         mapevent = mapevent + varhex2
-        size = pancarted * 12
+        sizepancarte = pancarted * 12
         varadr2 = add2hex(varadr, 4)
-        varhex2 = readRomData(hexrom, varadr2, size)
+        varhex2 = readRomData(hexrom, varadr2, sizepancarte)
         varhex2 = varhex2 = varhex2.decode(encoding="utf-8")
         mapevent = mapevent + varhex2
         mapevent = mapevent + pnjscripth + warph + scripth + pancarteh
@@ -122,7 +123,7 @@ for x in range(43):
         varadr = add2hex(varadr, 12)
         varadr = readpointer(hexrom, varadr)
         if varadr != "000000":
-            print(varadr)
+            #print(varadr)
             connectionh = readRomData(hexrom, varadr, 4)
             connectionh = connectionh.decode(encoding="utf-8")
             connectiond = conv_hex2dec(connectionh[0:2])
@@ -134,7 +135,16 @@ for x in range(43):
             mapconnections = mapconnections + connectionh
         else :
             mapconnections = ""
-        
+        #build map file
+        mapfilepart1 = largeurh + hauteurh + tileset1 + tileset2 + largbordh + hautbordh + '0000'+ GC + '00000000'
+        mapfilepart2 = block + blockbord + mapcoll
+        #data formating
+        vardec2 = len(mapfilepart1) + len(mapfilepart2) + 8
+        vardec2 = vardec2/2
+        vardec2 = vardec2 + 1
+        vardec2 = int(vardec2)
+        varhex2 = conv_dec2hex(vardec2)
+        print(mapfilepart1)
 
     #print(mapp)
     print(bankp)

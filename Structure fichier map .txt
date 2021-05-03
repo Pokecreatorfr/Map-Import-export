@@ -6,7 +6,7 @@
 00000011= hauteur bloc de bordure
 00000014-00000017= GAMECODE+4
 00000020-00000023= Bloc de données relatif aux scripts de carte ???
-00000024-00000025= taille du fichier -7 ( inversé)
+00000024-00000027= taille du fichier -8 ( inversé)
 00000028-00000033= bloc de données composé de :
 
 00000028-00000029= Numéro Musique
@@ -18,10 +18,13 @@
 00000034-(Fin du bloc) = Bloc de bordure ( longueur = largeur bloc de bordure*hauteur bloc de bordure*2)
 (Fin du bloc precedent)-(FIN du bloc)= Données maps et mouvements (  longueur = largeur*hauteur*2)
 (FIN du bloc precedent)-(FIN du bloc)= Données evenements:
+
 personage = nbscriptpnj * 24
 warp = nbwarp * 8
 script =  nbscript * 16
 pancarte = nbpancarte * 12
+adresse scripts ( inversé)+00 00 * 4(un par type de script)
+
 (FIN du bloc precedent)-(FIN du bloc)= Données Scripts carte
 (FIN du bloc precedent)-(FIN du bloc)= Données connexions map ( longueur = nbconnexions*12 +4)
 (Fin du fichier - 4) - (fin du fichier - 2) = Adresse du debut du block de connexion ( inversé)
