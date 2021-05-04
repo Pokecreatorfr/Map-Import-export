@@ -60,3 +60,5 @@ sizepnj = 0
 sizewarp = 0
 sizescript = 0
 sizepancarte = 0
+varstr = '0'
+varstr2 = '0'

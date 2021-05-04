@@ -1,11 +1,17 @@
 from romh import *
 from mape import *
 from Value import *
+import os
+from binascii import unhexlify
+
 filename = "BPRE0.gba"
 
 
-
 hexrom = openRomRead(filename)
+varstr = os.getcwd()
+varstr = varstr + '/' + 'maps'
+os.mkdir(varstr)
+print(varstr)
 for i in range(43):
     bankp[i] = readRomData(hexrom, listadre[i], 3)
 for x in range(43):
@@ -13,6 +19,12 @@ for x in range(43):
     bankp[x] = hexv[4:6] + hexv [2:4] + hexv[0:2]
     bankp[x] = bankp[x].decode(encoding="utf-8")
     nmap = nbmap[x]
+    varstr = os.getcwd()
+    varstr2 = varstr + '\maps' + '/' + str(x)
+    os.mkdir(varstr2)
+    #print(varstr2)
+    varstr = os.getcwd()
+    varstr = varstr + '\maps' + '\\' + str(x)
     for i in range(nmap):
         mapp[i] = conv_hex2dec(bankp[x])+4*i
         mapp[i] = conv_dec2hex(mapp[i])
@@ -209,9 +221,15 @@ for x in range(43):
             varhex2 = '00' + varhex2
         varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
         mapfilefinal = mapfilepart1 + varhex2 + mapfilepart2 + mapfilepart3
-        print(mapfilefinal)
+        mapfilefinal = unhexlify(mapfilefinal)
+        varstr2 = varstr + '\\' + str(i) + '.map'
+        varstr2 = str(varstr2)
+        mapfile = open(varstr2,'wb')
+        mapfile.write(mapfilefinal)
+        mapfile.close()
+        print(varstr2)
 
     #print(mapp)
-    print(bankp)
+    #print(bankp)
 #print(bankp)
 #print(mapp)
