@@ -2,10 +2,15 @@ from romh import *
 
 def readpointer(rom, adress):
     functionhexvar = readRomData(rom, adress, 4)
-    functionhexvar = functionhexvar[4:6] + functionhexvar[2:4] + functionhexvar[0:2]
+    if functionhexvar[6:8] != '09' and functionhexvar[6:8] != '08':
+        itsapointer = False
     if functionhexvar[6:8] == '09':
-        functionhexvar = '01' + functionhexvar
+        functionhexvar = functionhexvar[0:6] + '01'
+    if functionhexvar[6:8] == '08':
+        functionhexvar = functionhexvar[0:6] + '0.'
+    functionhexvar = functionhexvar[4:6] + functionhexvar[2:4] + functionhexvar[0:2]
     functionhexvar = functionhexvar.decode(encoding="utf-8")
+
     return functionhexvar
 
 def add2hex(hex, numb):

@@ -15,9 +15,9 @@ for i in range(43):
         varstr2 = varstr + '\\' + str(x) + '.map'
         mapfilefinal = openRomRead(varstr2)
         largeurh = readRomData(mapfilefinal ,'00', 4).decode(encoding="utf-8")
-        largueurd = conv_hex2dec(largueurd)
+        largueurd = conv_hex2dec(largeurh[0:2])
         hauteurh = readRomData(mapfilefinal ,'04', 4).decode(encoding="utf-8")
-        hauteurd = conv_hex2dec(hauteurd)
+        hauteurd = conv_hex2dec(hauteurh[0:2])
         tileset1 = readRomData(mapfilefinal ,'08', 4).decode(encoding="utf-8")
         tileset2 = readRomData(mapfilefinal ,'0C', 4).decode(encoding="utf-8")
         largbordh = readRomByte(mapfilefinal, '10').decode(encoding="utf-8")
@@ -30,6 +30,6 @@ for i in range(43):
         varhex = add2hex('34', size+1)
         mapcollseize = largueurd * hauteurd * 2
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
-        
+
         print(varstr2)
-        print(block)
+        print(mapcoll)
