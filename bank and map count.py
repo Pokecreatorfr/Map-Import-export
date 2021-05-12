@@ -25,10 +25,6 @@ while itsabank == True :
         itsamap = False
     if varhex[22:24] != '08' and  varhex[22:24] != '09' and varhex[22:24] != '00':
         itsamap = False
-    varhex2 = varhex[34:36] + varhex[32:34]
-    vardec = conv_hex2dec(varhex2)
-    if vardec > 500:
-        itsamap = False
     vardec = conv_hex2dec(varhex[42:44])
     #print(vardec)
     if vardec > 2:
@@ -66,23 +62,23 @@ for i in range (numbofbank):
         if vardec3 > 800:
             vardec3 = 800
     #print(vardec3)
-    varadr = readpointer(hexrom,varadr)
+    #varadr = readpointer(hexrom,varadr)
     varadr = add2hex(varadr, -4)
     itsamap = True
     numbofmap = 0
+    vardec4 = 0
     #print(varadr)
     while itsamap == True:
         varadr = add2hex(varadr, 4)
-        varhex = readRomData(hexrom, varadr, 28).decode(encoding="utf-8")
+        varadr2 = readpointer(hexrom,varadr)
+        #print(varadr)
+        varhex = readRomData(hexrom, varadr2, 28).decode(encoding="utf-8")
+        #itsamap = False
         if varhex[6:8] != '08' and varhex[6:8] != '09':
             itsamap = False
         if varhex[14:16] != '08' and  varhex[14:16] != '09' and varhex[14:16] != '00':
             itsamap = False
         if varhex[22:24] != '08' and  varhex[22:24] != '09' and varhex[22:24] != '00':
-            itsamap = False
-        varhex2 = varhex[34:36] + varhex[32:34]
-        vardec = conv_hex2dec(varhex2)
-        if vardec > 500:
             itsamap = False
         vardec = conv_hex2dec(varhex[42:44])
         #print(vardec)
@@ -94,13 +90,15 @@ for i in range (numbofbank):
         vardec = conv_hex2dec(varhex[46:48])
         if vardec > 9:
             itsamap = False
-        varhex2 = varhex[34:36] + varhex[32:34]
-        numbofmap = numbofmap + 1
-        if itsapointer == False :
+        vardec4 = vardec4 + 4
+        print(vardec3,vardec4)
+        if vardec4 > vardec3:
             itsamap = False
-        if itsabank == False :
+        numbofmap = numbofmap + 1
+        if itsamap == False:
             numbofmap = numbofmap - 1
-        if itsabank == True :
-            nbmap[numbofbank - 1] = numbofmap
-        print(numbofmap)
-    #print(nbmap)
+        nbmap[i] = numbofmap
+        print(varhex)
+        print(itsamap)
+        #print(numbofmap)
+    print(nbmap)
