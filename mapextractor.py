@@ -91,17 +91,17 @@ for i in range (numbofbank):
         if vardec > 9:
             itsamap = False
         vardec4 = vardec4 + 4
-        print(vardec3,vardec4)
+        #print(vardec3,vardec4)
         if vardec4 > vardec3:
             itsamap = False
         numbofmap = numbofmap + 1
         if itsamap == False:
             numbofmap = numbofmap - 1
         nbmap[i] = numbofmap
-        print(varhex)
-        print(itsamap)
+        #print(varhex)
+        #print(itsamap)
         #print(numbofmap)
-    print(nbmap)
+print(nbmap)
 
 hexrom = openRomRead(filename)
 varstr = os.getcwd()
