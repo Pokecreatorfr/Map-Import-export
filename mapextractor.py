@@ -116,11 +116,11 @@ for x in range(43):
     bankp[x] = bankp[x].decode(encoding="utf-8")
     nmap = nbmap[x]
     varstr = os.getcwd()
-    varstr2 = varstr + '\maps' + '/' + str(x)
+    varstr2 = varstr + '/maps' + '/' + str(x)
     os.mkdir(varstr2)
     #print(varstr2)
     varstr = os.getcwd()
-    varstr = varstr + '\maps' + '\\' + str(x)
+    varstr = varstr + '/maps' + '/' + str(x)
     for i in range(nmap):
         mapp[i] = conv_hex2dec(bankp[x])+4*i
         mapp[i] = conv_dec2hex(mapp[i])
@@ -318,7 +318,7 @@ for x in range(43):
         varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
         mapfilefinal = mapfilepart1 + varhex2 + mapfilepart2 + mapfilepart3
         mapfilefinal = unhexlify(mapfilefinal)
-        varstr2 = varstr + '\\' + str(i) + '.map'
+        varstr2 = varstr + '/' + str(i) + '.map'
         varstr2 = str(varstr2)
         mapfile = open(varstr2,'wb')
         mapfile.write(mapfilefinal)
