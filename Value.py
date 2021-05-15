@@ -70,3 +70,4 @@ bankpointer = '0'
 mappointer = '0'
 numbofbank = 0
 numbofmap = 0
+noconnection = False
