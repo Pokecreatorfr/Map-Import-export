@@ -49,5 +49,5 @@ for i in range(numbofbank):
         connexions = readRomData(mapfilefinal, varadr, connectiond*12)
         if connectiond == 0:
             connexions = "00"
-        #print(varstr2)
+        print(varadr)
         print(connexions)
