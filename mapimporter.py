@@ -42,7 +42,6 @@ for i in range(numbofbank):
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
         vardec = len(mapfilefinal)
         varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
-        print(varadr)
         if varadr != '0000':
             connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
             connectiond = conv_hex2dec(connectionh)
