@@ -42,15 +42,14 @@ for i in range(numbofbank):
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
         vardec = len(mapfilefinal)
         varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
-        if varadr != '0000':
-            connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
-            connectiond = conv_hex2dec(connectionh)
-            varadr = add2hex(varadr,4)
-            varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
-            varadr = varadr[2:4] +varadr[0:2]
-            connexions = readRomData(mapfilefinal, varadr, connectiond*12)
-            print(varadr)
-            print(connexions)
-        else :
+        connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
+        connectiond = conv_hex2dec(connectionh)
+        varadr = add2hex(varadr,4)
+        varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
+        varadr = varadr[2:4] +varadr[0:2]
+        connexions = readRomData(mapfilefinal, varadr, connectiond*12).decode(encoding="utf-8")
+        print(varadr)
+        print(connexions)
+        if connexions == '':
             noconnection = True
-            print(noconnection)
+        print(noconnection)
