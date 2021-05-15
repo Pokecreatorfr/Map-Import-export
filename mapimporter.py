@@ -39,5 +39,15 @@ for i in range(numbofbank):
         varhex = add2hex('34', size+1)
         mapcollseize = largueurd * hauteurd * 2
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
-        print(varstr2)
-        print(mapcoll)
+        vardec = len(mapfilefinal)
+        varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
+        connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
+        connectiond = conv_hex2dec(connectionh)
+        varadr = add2hex(varadr,4)
+        varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
+        varadr = varadr[2:4] +varadr[0:2]
+        connexions = readRomData(mapfilefinal, varadr, connectiond*12)
+        if connectiond == 0:
+            connexions = "00"
+        #print(varstr2)
+        print(connexions)
