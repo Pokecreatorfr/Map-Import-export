@@ -244,7 +244,7 @@ for x in range(43):
             mapconnections = mapconnections.decode(encoding="utf-8")
             mapconnections = mapconnections + connectionh
         else :
-            mapconnections = ""
+            mapconnections = "0000"
         #build map file
         mapfilepart1 = largeurh + hauteurh + tileset1 + tileset2 + largbordh + hautbordh + 'c300'+ GC + '34000000'
         mapfilepart2 = block + blockbord + mapcoll
@@ -315,8 +315,6 @@ for x in range(43):
             varhex2 = '0' + varhex2
         if len(varhex2) == 2 :
             varhex2 = '00' + varhex2
-        if connectiond == 0:
-            varhex2 = '0000'
         varhex2 = varhex2[2:4] + varhex2[0:2] + '0000'
         mapfilefinal = mapfilepart1 + varhex2 + mapfilepart2 + mapfilepart3
         mapfilefinal = unhexlify(mapfilefinal)
