@@ -22,6 +22,7 @@ for i in range(numbofbank):
         hexrom = openRomRead(filename)
         varstr2 = varstr + '/' + str(x) + '.map'
         print(varstr2)
+        noconnection = False
         mapfilefinal = openRomRead(varstr2)
         largeurh = readRomData(mapfilefinal ,'00', 4).decode(encoding="utf-8")
         largueurd = conv_hex2dec(largeurh[0:2])
@@ -41,13 +42,16 @@ for i in range(numbofbank):
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
         vardec = len(mapfilefinal)
         varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
-        connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
-        connectiond = conv_hex2dec(connectionh)
-        varadr = add2hex(varadr,4)
-        varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
-        varadr = varadr[2:4] +varadr[0:2]
-        connexions = readRomData(mapfilefinal, varadr, connectiond*12)
-        if connectiond == 0:
-            connexions = "00"
         print(varadr)
-        print(connexions)
+        if varadr != '0000':
+            connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
+            connectiond = conv_hex2dec(connectionh)
+            varadr = add2hex(varadr,4)
+            varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
+            varadr = varadr[2:4] +varadr[0:2]
+            connexions = readRomData(mapfilefinal, varadr, connectiond*12)
+            print(varadr)
+            print(connexions)
+        else :
+            noconnection = True
+            print(noconnection)
