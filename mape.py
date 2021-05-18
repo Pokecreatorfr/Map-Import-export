@@ -1,4 +1,5 @@
 from romh import *
+from binascii import unhexlify
 
 def readpointer(rom, adress):
     functionhexvar = readRomData(rom, adress, 4)
@@ -25,5 +26,15 @@ def makepointer(adress):
         functionhexvar = '09' + adress[1:3] + adress[3:5] + adress[5:7]
     if len(adress) == 6:
         functionhexvar = '08' + adress[0:2] + adress[2:4] + adress[4:6]
-    functionhexvar = adress[6:8] + adress[4:6] +adress[2:4] + adress[0:2]
+    functionhexvar = functionhexvar[6:8] + functionhexvar[4:6] + functionhexvar[2:4] + functionhexvar[0:2]
     return functionhexvar
+
+def writedatainrom(rom, data, adress):
+    fonctionhexvar2 = openRomRead(rom).decode(encoding="utf-8")
+    fonctionhexvar2 = unhexlify(fonctionhexvar2)
+    fonctionhexvar = open(rom,'wb')
+    fonctionhexvar = fonctionhexvar
+    fonctionhexvar3 = unhexlify(data)
+    fonctiondecvar = conv_hex2dec(adress)*2
+    fonctionhexvar.write(fonctionhexvar2[0:fonctiondecvar] + fonctionhexvar3 + fonctionhexvar2[fonctiondecvar+len(fonctionhexvar3):len(fonctionhexvar2)])
+    fonctionhexvar.close()

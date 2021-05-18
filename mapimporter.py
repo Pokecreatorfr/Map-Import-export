@@ -36,8 +36,8 @@ for i in range(numbofbank):
         hautbordd = conv_hex2dec(hautbordh)
         size = (hautbordd * largbordd) * 2
         block = readRomData(mapfilefinal , '28' , 12).decode(encoding="utf-8")
-        bordure = readRomData(mapfilefinal , '34' , size).decode(encoding="utf-8")
-        varhex = add2hex('34', size+1)
+        bordure = readRomData(mapfilefinal , '34' , size)
+        varhex = add2hex('34', size)
         mapcollseize = largueurd * hauteurd * 2
         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize).decode(encoding="utf-8")
         vardec = len(mapfilefinal)
@@ -48,8 +48,42 @@ for i in range(numbofbank):
         varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
         varadr = varadr[2:4] +varadr[0:2]
         connexions = readRomData(mapfilefinal, varadr, connectiond*12).decode(encoding="utf-8")
-        print(varadr)
-        print(connexions)
+        #print(mapcoll)
+        #print(varadr)
+        #print(connexions)
         if connexions == '':
             noconnection = True
-        print(noconnection)
+        varadr = readRomData(mapfilefinal,'1C', 2).decode(encoding="utf-8")
+        varadr = varadr[2:4] + varadr[0:2]
+        #print(varadr)
+        pnjscripth = readRomByte(mapfilefinal, varadr).decode(encoding="utf-8")
+        warph = readRomByte(mapfilefinal, add2hex(varadr, 1)).decode(encoding="utf-8")
+        scripth = readRomByte(mapfilefinal, add2hex(varadr, 2)).decode(encoding="utf-8")
+        pancarteh = readRomByte(mapfilefinal, add2hex(varadr, 3)).decode(encoding="utf-8")
+        pnjscriptd = conv_hex2dec(pnjscripth)
+        warpd = conv_hex2dec(warph)
+        scriptd = conv_hex2dec(scripth)
+        pancarted = conv_hex2dec(pancarteh)
+        #print(pnjscriptd, warpd, scriptd, pancarted)
+        varadr2 = readRomData(mapfilefinal, add2hex(varadr,4), 4).decode(encoding="utf-8")
+        varadr2 = varadr[6:8] + varadr[4:6] +varadr[2:4] + varadr[0:2]
+        pnjscript = readRomData(mapfilefinal,varadr2, pnjscriptd*24)
+        varadr2 = readRomData(mapfilefinal, add2hex(varadr,8), 4).decode(encoding="utf-8")
+        varadr2 = varadr[6:8] + varadr[4:6] +varadr[2:4] + varadr[0:2]
+        warp = readRomData(mapfilefinal,varadr2, warpd*8)
+        varadr2 = readRomData(mapfilefinal, add2hex(varadr,12), 4).decode(encoding="utf-8")
+        varadr2 = varadr[6:8] + varadr[4:6] +varadr[2:4] + varadr[0:2]
+        script = readRomData(mapfilefinal,varadr2, scriptd*16)
+        varadr2 = readRomData(mapfilefinal, add2hex(varadr,16), 4).decode(encoding="utf-8")
+        varadr2 = varadr[6:8] + varadr[4:6] +varadr[2:4] + varadr[0:2]
+        pancarte = readRomData(mapfilefinal,varadr2, pancarted*12)
+        varadr3 = conv_dec2hex(int(hexrom.find(bordure)/2))
+        if varadr3 != '0':
+            varadr3 = unhexlify(makepointer(varadr3))
+            maptable1 = unhexlify(largeurh) + unhexlify(hauteurh) + varadr3
+        else :
+            varadr3 = conv_dec2hex(search(hexrom, len(bordure)/2, 00))
+            writedatainrom(filename, bordure, varadr3)
+        print(varadr3)
+        #print(mapcoll)
+        #print(noconnection)

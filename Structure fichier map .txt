@@ -5,6 +5,7 @@
 00000010= largeur bloc de bordure
 00000011= hauteur bloc de bordure
 00000014-00000017= GAMECODE+4
+0000001C-0000001D= Pointeur scriptnb
 00000020-00000023= Bloc de données relatif aux scripts de carte ???
 00000024-00000027= taille du fichier -8 ( inversé)
 00000028-00000033= bloc de données composé de :
