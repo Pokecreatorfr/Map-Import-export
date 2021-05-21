@@ -26,6 +26,10 @@ def makepointer(adress):
         functionhexvar = '09' + adress[1:3] + adress[3:5] + adress[5:7]
     if len(adress) == 6:
         functionhexvar = '08' + adress[0:2] + adress[2:4] + adress[4:6]
+    if len(adress) == 5:
+        functionhexvar = '08' + '0' +adress[0] + adress[1:3] + adress[3:5]
+    if len(adress) == 4:
+        functionhexvar = '08' + '00' + adress[0:2] + adress[2:4]
     functionhexvar = functionhexvar[6:8] + functionhexvar[4:6] + functionhexvar[2:4] + functionhexvar[0:2]
     return functionhexvar
 
