@@ -283,6 +283,6 @@ for i in range(numbofbank):
             writedatainrom(filename, maptable1, varadr3)
         hexrom = openRomRead(filename)
         maptable2 = maptable2 + makepointer(varadr3)
-        varadr3 = conv_dec2hex(int(search(filename, 20, 8388608)))
+        varadr3 = conv_dec2hex(int(search(hexrom, 2, 8388608)))
         #writedatainrom(filename, '00FF', varadr3)
         print(varadr3)
