@@ -285,7 +285,7 @@ for i in range(numbofbank):
         maptable2 = maptable2 + makepointer(varadr3)
         varadr3 = conv_dec2hex(int(hexrom[8388608:].find(hexlify(unhexlify('ffffffff')))/2))
         varadr3 = add2hex(varadr3, 8388608)
-        writedatainrom(filename, '00FF', varadr3)
+        writedatainrom(filename, '00ff', varadr3)
         hexrom = openRomRead(filename)
         maptable2 = maptable2 + makepointer(varadr3)
         print(varadr3)
