@@ -118,6 +118,7 @@ for i in range(numbofbank):
     varstr = varstr + '/' + 'maps' + '/' + str(i)
     #print(varstr)
     nmap = nbmap[i]
+    mapstable = ''
     for x in range(nmap):
         hexrom = openRomRead(filename)
         varstr2 = varstr + '/' + str(x) + '.map'
@@ -288,4 +289,54 @@ for i in range(numbofbank):
         writedatainrom(filename, '00ff', varadr3)
         hexrom = openRomRead(filename)
         maptable2 = maptable2 + makepointer(varadr3)
-        print(varadr3)
+        print(connexions)
+        if connectiond == 0:
+            varadr3 = '00000000'
+            maptable2 = maptable2 + varadr3
+        else:
+            varhex = unhexlify(connexions)
+            varadr3 = conv_dec2hex(int(hexrom.find(varhex)/2))
+            if varadr3 != '0':
+                varadr3 = makepointer(varadr3)
+            else :
+                varhex = 'ff' * int(len(connexions))
+                varadr3 = conv_dec2hex(int(hexrom[8388608:].find(hexlify(unhexlify(varhex)))/2))
+                varadr3 = add2hex(varadr3, 8388608)
+                writedatainrom(filename, connexions, varadr3)
+                hexrom = openRomRead(filename)
+                varadr3 = makepointer(varadr3)
+            maptable1 = connectionh + '000000' + varadr3
+            if x <= nbmapinrom[i]:
+                varadr3 = readpointer(hexrom, listadre[i])
+                varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
+                varadr3 = readpointer(hexrom, add2hex(varadr3,12))
+                writedatainrom(filename, maptable1, varadr3)
+            else:
+                varadr3 = conv_dec2hex(int(search(filename, 10, 00)))
+                writedatainrom(filename, maptable1, varadr3)
+            varadr3 = makepointer(varadr3)
+        maptable2 = maptable2 + varadr3 + block
+        if x <= nbmapinrom[i]:
+            varadr3 = readpointer(hexrom, listadre[i])
+            varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
+            writedatainrom(filename, maptable2, varadr3)
+        else:
+            varadr3 = conv_dec2hex(int(search(filename, 28, 00)))
+            writedatainrom(filename, maptable2, varadr3)
+        mapstable = mapstable + makepointer(varadr3)
+    if nbmap[i] <= nbmapinrom[i]:
+        mapstable = mapstable + "ffffffff" * (nbmapinrom[i] - nbmap[i])
+        varadr3 = readpointer(hexrom, listadre[i])
+        writedatainrom(filename, mapstable, varadr3)
+    else:
+        varadr3 = varadr3 = conv_dec2hex(int(search(filename, len(mapstable)/2, 00)))
+        writedatainrom(filename, mapstable, varadr3)
+    banktable = banktable + makepointer(varadr3)
+if numbofbank <= numbofbankinrom:
+    banktable = banktable + "ffffffff" * (numbofbankinrom - numbofbank)
+    print(banktable)
+    writedatainrom(filename, banktable, listadre[0])
+else:
+    varadr3 = varadr3 = conv_dec2hex(int(search(filename, len(banktable)/2, 00)))
+    writedatainrom(filename, banktable, varadr3)
+print('Importing maps: finished. congratulation.\n Scripts made by Pokecreatorfr with the help of some members of Pokémon Trash,\n and has the help of HexManiacAdvence, http://datacrystal.romhacking.net and by python library made by cosarara97.\n If you encounter any bugs please contact pokecreatorfr.')
