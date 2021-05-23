@@ -289,7 +289,7 @@ for i in range(numbofbank):
         writedatainrom(filename, '00ff', varadr3)
         hexrom = openRomRead(filename)
         maptable2 = maptable2 + makepointer(varadr3)
-        print(connexions)
+        #print(connexions)
         if connectiond == 0:
             varadr3 = '00000000'
             maptable2 = maptable2 + varadr3
@@ -334,9 +334,27 @@ for i in range(numbofbank):
     banktable = banktable + makepointer(varadr3)
 if numbofbank <= numbofbankinrom:
     banktable = banktable + "ffffffff" * (numbofbankinrom - numbofbank)
-    print(banktable)
+    #print(banktable, len(banktable))
     writedatainrom(filename, banktable, listadre[0])
 else:
     varadr3 = varadr3 = conv_dec2hex(int(search(filename, len(banktable)/2, 00)))
     writedatainrom(filename, banktable, varadr3)
-print('Importing maps: finished. congratulation.\n Scripts made by Pokecreatorfr with the help of some members of Pokémon Trash,\n and has the help of HexManiacAdvence, http://datacrystal.romhacking.net and by python library made by cosarara97.\n If you encounter any bugs please contact pokecreatorfr.')
+print('────────▄███████████▄────────')
+print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
+print('────███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███────')
+print('───██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██───')
+print('──██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██──')
+print('██▓▓▓▓▓▓▓▓▓███████▓▓▓▓▓▓▓▓▓██')
+print('██▓▓▓▓▓▓▓▓██░░░░░██▓▓▓▓▓▓▓▓██')
+print('██▓▓▓▓▓▓▓██░░███░░██▓▓▓▓▓▓▓██')
+print('███████████░░███░░███████████')
+print('██░░░░░░░██░░███░░██░░░░░░░██')
+print('██░░░░░░░░██░░░░░██░░░░░░░░██')
+print('██░░░░░░░░░███████░░░░░░░░░██')
+print('─██░░░░░░░░░░░░░░░░░░░░░░░██─')
+print('──██░░░░░░░░░░░░░░░░░░░░░██──')
+print('───██░░░░░░░░░░░░░░░░░░░██───')
+print('────███░░░░░░░░░░░░░░░███────')
+print('─────▀███░░░░░░░░░░░███▀─────')
+print('────────▀███████████▀────────')
+print('##################################\n Map importation: finished. Congratulation.\n Scripts made by Pokecreatorfr with the help of some members of Pokémon Trash,\n and has the help of HexManiacAdvence, http://datacrystal.romhacking.net \n and by python library made by cosarara97.\n If you encounter any bugs please contact pokecreatorfr.\n##################################')
