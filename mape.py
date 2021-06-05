@@ -39,6 +39,6 @@ def writedatainrom(rom, data, adress):
     fonctionhexvar = open(rom,'wb')
     fonctionhexvar = fonctionhexvar
     fonctionhexvar3 = unhexlify(data)
-    fonctiondecvar = conv_hex2dec(adress)*2
+    fonctiondecvar = conv_hex2dec(adress)
     fonctionhexvar.write(fonctionhexvar2[0:fonctiondecvar] + fonctionhexvar3 + fonctionhexvar2[fonctiondecvar+len(fonctionhexvar3):len(fonctionhexvar2)])
     fonctionhexvar.close()
