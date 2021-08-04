@@ -34,6 +34,7 @@ def makepointer(adress):
     return functionhexvar
 
 def writedatainrom(rom, data, adress):
+    print(adress)
     fonctionhexvar2 = openRomRead(rom).decode(encoding="utf-8")
     fonctionhexvar2 = unhexlify(fonctionhexvar2)
     fonctionhexvar = open(rom,'wb')

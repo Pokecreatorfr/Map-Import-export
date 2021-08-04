@@ -103,7 +103,7 @@ for i in range (numbofbankinrom):
         print(itsamap)
         #print(numbofmap)
     print(nbmapinrom)
-
+print(listadre)
 varstr = os.getcwd() + '/maps'
 numbofbank = (len(next(os.walk(varstr))[1]))
 for i in range(numbofbank):
@@ -213,8 +213,11 @@ for i in range(numbofbank):
         maptable1 = hexlify(maptable1)
         if x <= nbmapinrom[i]:
             varadr3 = readpointer(hexrom, listadre[i])
+            print(listadre[i], varadr3, add2hex(varadr3, 4*x))
             varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
+            print(varadr3)
             varadr3 = readpointer(hexrom, varadr3)
+            print(varadr3)
             writedatainrom(filename, maptable1, varadr3)
         else:
             varadr3 = conv_dec2hex(search(filename, 28, 00))
@@ -292,7 +295,6 @@ for i in range(numbofbank):
         #print(connexions)
         if connectiond == 0:
             varadr3 = '00000000'
-            maptable2 = maptable2 + varadr3
         else:
             varhex = unhexlify(connexions)
             varadr3 = conv_dec2hex(int(hexrom.find(varhex)/2))
@@ -316,6 +318,7 @@ for i in range(numbofbank):
                 writedatainrom(filename, maptable1, varadr3)
             varadr3 = makepointer(varadr3)
         maptable2 = maptable2 + varadr3 + block
+        print(maptable2, block)
         if x <= nbmapinrom[i]:
             varadr3 = readpointer(hexrom, listadre[i])
             varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
