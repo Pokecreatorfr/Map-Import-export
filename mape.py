@@ -34,7 +34,7 @@ def makepointer(adress):
     return functionhexvar
 
 def writedatainrom(rom, data, adress):
-    print(adress)
+    #print(adress)
     fonctionhexvar2 = openRomRead(rom).decode(encoding="utf-8")
     fonctionhexvar2 = unhexlify(fonctionhexvar2)
     fonctionhexvar = open(rom,'wb')
@@ -43,3 +43,15 @@ def writedatainrom(rom, data, adress):
     fonctiondecvar = conv_hex2dec(adress)
     fonctionhexvar.write(fonctionhexvar2[0:fonctiondecvar] + fonctionhexvar3 + fonctionhexvar2[fonctiondecvar+len(fonctionhexvar3):len(fonctionhexvar2)])
     fonctionhexvar.close()
+
+def searchdatainrom(rom, data):
+    fonctionhexvar = conv_dec2hex(rom.find(data))
+    if conv_hex2dec(fonctionhexvar) % 2 != 0:
+        while conv_hex2dec(fonctionhexvar) % 2 != 0:
+            fonctiondecvar = conv_hex2dec(fonctionhexvar) + 1
+            fonctionhexvar = conv_dec2hex((rom[fonctiondecvar:]).find(data) + fonctiondecvar)
+    fonctionhexvar = conv_dec2hex(int(conv_hex2dec(fonctionhexvar)/2))
+    return fonctionhexvar
+
+def freebyte(need):
+    return b'ff'*need

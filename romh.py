@@ -87,7 +87,7 @@ def insertSpacesBetweenBytes(hexstring):
         '36 37 38 39 30 2d 41'. It may be useless when you are working with
         the variables, but useful when you have to show the bytes to the user"""
     new = ""
-    for i in range(len(hexstring) / 2):
+    for i in range(int(len(hexstring) / 2)):
         pos = i * 2
         new += hexstring[pos:pos + 2] + " "
     return new
