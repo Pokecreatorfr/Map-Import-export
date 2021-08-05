@@ -5,4 +5,4 @@ mapextractor.py:
 mapimporter.py: 
     everything is functional however I do not advise to use it for your rom because I have not done enough testing, if you use it you can send me your feedback on discord.
 If you want to help me contact me via diasord:
-- Pokecreatorfr # 2008
+- Pokecreatorfr # 2003
