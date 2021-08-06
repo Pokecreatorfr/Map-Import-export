@@ -144,6 +144,7 @@ for i in range(numbofbank):
         vardec = len(mapfilefinal)
         varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
         connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
+        print(connectionh)
         connectiond = conv_hex2dec(connectionh)
         varadr = add2hex(varadr,4)
         varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
@@ -182,6 +183,7 @@ for i in range(numbofbank):
         if conv_hex2dec(varadr3) % 2 != 0 :
             print('ATTENTION MATHEO TU AS FAIT DE LA MERDE !!!!!')
         if varadr3 != '0':
+            #print(varadr3)
             varadr3 = unhexlify(makepointer(varadr3))
             maptable1 = unhexlify(largeurh) + unhexlify(hauteurh) + varadr3
         else :
@@ -238,7 +240,7 @@ for i in range(numbofbank):
                 if varadr3 != '0':
                     varadr3 = makepointer(varadr3)
                 else :
-                    varadr3 = conv_dec2hex(hexrom(int(len(pnjscript)/2)*b'ff'))
+                    varadr3 = searchdatainrom(hexrom,freebyte(int(len(pnjscript)/2)))
                     writedatainrom(filename, pnjscript, varadr3)
                     hexrom = openRomRead(filename)
                     varadr3 = makepointer(varadr3)
@@ -262,7 +264,7 @@ for i in range(numbofbank):
                 if varadr3 != '0':
                     varadr3 = makepointer(varadr3)
                 else :
-                    varadr3 = conv_dec2hex(search(hexrom, len(script)/2, 00))
+                    varadr3 = searchdatainrom(hexrom,freebyte(int(len(script)/2)))
                     writedatainrom(filename, script, varadr3)
                     hexrom = openRomRead(filename)
                     varadr3 = makepointer(varadr3)
@@ -274,7 +276,7 @@ for i in range(numbofbank):
                 if varadr3 != '0':
                     varadr3 = makepointer(varadr3)
                 else :
-                    varadr3 = conv_dec2hex(search(hexrom, len(pancarte)/2, 00))
+                    varadr3 = searchdatainrom(hexrom, freebyte(int(len(pancarte)/2)))
                     writedatainrom(filename, pancarte, varadr3)
                     hexrom = openRomRead(filename)
                     varadr3 = makepointer(varadr3)
