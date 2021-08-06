@@ -180,7 +180,7 @@ for i in range(numbofbank):
         varadr2 = varadr2[6:8] + varadr2[4:6] +varadr2[2:4] + varadr2[0:2]
         pancarte = readRomData(mapfilefinal,varadr2, pancarted*12)
         varadr3 = searchdatainrom(hexrom, bordure)
-        if conv_hex2dec(varadr3) % 2 != 0 :
+        if conv_hex2dec(varadr3) % 2 != 0 & conv_hex2dec(varadr3) != 0:
             print('ATTENTION MATHEO TU AS FAIT DE LA MERDE !!!!!')
         if varadr3 != '0':
             #print(varadr3)
@@ -212,6 +212,7 @@ for i in range(numbofbank):
         tileset1 = conv_dec2hex(tileset1d)
         tileset2 = conv_dec2hex(tileset2d)
         tileset1 = makepointer(tileset1)
+        print(tileset2)
         tileset2 = makepointer(tileset2)
         maptable1 = maptable1 + unhexlify(tileset1) + unhexlify(tileset2) + unhexlify(mapfilefinal[32:34]) + unhexlify(mapfilefinal[34:36]) + unhexlify('0000')
         maptable1 = hexlify(maptable1)
