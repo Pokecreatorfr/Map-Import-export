@@ -209,6 +209,7 @@ for i in range(numbofbank):
         tileset2 = tileset2.decode(encoding="utf-8")
         tileset1d = conv_hex2dec(tileset1)*24 +tilesetstart
         tileset2d = conv_hex2dec(tileset2)*24 +tilesetstart
+        print(conv_hex2dec(tileset2),tileset2,tilesetstart,tileset2d)
         tileset1 = conv_dec2hex(tileset1d)
         tileset2 = conv_dec2hex(tileset2d)
         tileset1 = makepointer(tileset1)

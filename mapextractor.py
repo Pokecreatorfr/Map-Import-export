@@ -110,6 +110,25 @@ os.mkdir(varstr)
 print(varstr)
 for i in range(43):
     bankp[i] = readRomData(hexrom, listadre[i], 3)
+def tileset_format(tileset, varhex):
+    if len(varhex) == 1:
+        tileset = '0' + varhex + "000000"
+    if len(varhex) == 2:
+        tileset = varhex + "000000"
+    if len(varhex) == 3:
+        tileset = '0' + varhex + "0000"
+    if len(varhex) == 4:
+        tileset = varhex + "0000"
+    if len(varhex) == 5:
+        tileset = '0' + varhex + "00"
+    if len(varhex) == 6:
+        tileset = varhex + "00"
+    if len(varhex) == 7:
+        tileset = '0' + varhex
+    if len(varhex) == 8:
+        tileset = varhex
+    return tileset
+
 for x in range(43):
     hexv = bankp[x]
     bankp[x] = hexv[4:6] + hexv [2:4] + hexv[0:2]
@@ -156,16 +175,13 @@ for x in range(43):
         varadr = add2hex(varadr, 20)
         varadr3 = readpointer(hexrom, varadr)
         vardec3 = conv_hex2dec(varadr3)
+        print(vardec3)
         tileset1d = (vardec2 - tilesetstart) / 24
         tileset2d = (vardec3 - tilesetstart) / 24
         varhex2 = conv_dec2hex(int(tileset1d))
         varhex3 = conv_dec2hex(int(tileset2d))
-        if len(varhex2) == 1:
-            varhex2 = "0" + varhex2
-        if len(varhex3) == 1:
-            varhex3 = "0" + varhex3
-        tileset1 = varhex2 + "000000"
-        tileset2 = varhex3 + "000000"
+        tileset1 = tileset_format(tileset1, varhex2)
+        tileset2 = tileset_format(tileset2, varhex3)
         #Read bodure block informations
         varadr = readpointer(hexrom, hexv)
         varadr = readpointer(hexrom, varadr)
