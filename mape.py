@@ -64,3 +64,8 @@ def searchdatainrom(rom, data):
 
 def freebyte(need):
     return b'ff'*need
+
+def write_in_hex_string(string,adress,data):
+    fonctiondecvar = 2*conv_hex2dec(adress)
+    string = string[0:fonctiondecvar] + data + string[(fonctiondecvar+len(data)):]
+ 
