@@ -112,48 +112,44 @@ for i in range(numbofbank):
     nbmap[i] = len(files)
 
 filename = "BPRE0.gba"
+hexrom = openRomRead(filename)
 for i in range(numbofbank):
-    hexrom = openRomRead(filename)
-    varstr = os.getcwd()
-    varstr = varstr + '/' + 'maps' + '/' + str(i)
-    #print(varstr)
-    nmap = nbmap[i]
-    mapstable = ''
-    for x in range(nmap):
-        hexrom = openRomRead(filename)
-        varstr2 = varstr + '/' + str(x) + '.map'
-        print(varstr2)
-        noconnection = False
-        mapfilefinal = openRomRead(varstr2)
-        largeurh = readRomData(mapfilefinal ,'00', 4).decode(encoding="utf-8")
-        largueurd = conv_hex2dec(largeurh[0:2])
-        hauteurh = readRomData(mapfilefinal ,'04', 4).decode(encoding="utf-8")
-        hauteurd = conv_hex2dec(hauteurh[0:2])
-        tileset1 = readRomData(mapfilefinal ,'08', 4).decode(encoding="utf-8")
-        tileset2 = readRomData(mapfilefinal ,'0C', 4).decode(encoding="utf-8")
-        largbordh = readRomByte(mapfilefinal, '10').decode(encoding="utf-8")
-        largbordd = conv_hex2dec(largbordh)
-        hautbordh = readRomByte(mapfilefinal, '11').decode(encoding="utf-8")
-        hautbordd = conv_hex2dec(hautbordh)
-        size = (hautbordd * largbordd) * 2
-        block = readRomData(mapfilefinal , '28' , 12).decode(encoding="utf-8")
-        bordure = readRomData(mapfilefinal , '34' , size)
-        varhex = add2hex('34', size)
-        mapcollseize = largueurd * hauteurd * 2
-        mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize)
-        vardec = len(mapfilefinal)
-        varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
-        connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
-        print(connectionh)
-        connectiond = conv_hex2dec(connectionh)
-        varadr = add2hex(varadr,4)
-        varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
-        varadr = varadr[2:4] +varadr[0:2]
-        connexions = readRomData(mapfilefinal, varadr, connectiond*12)
-        #print(mapcoll)
-        #print(varadr)
-        #print(connexions)
-        if connexions == '':
+     varstr = os.getcwd()
+     varstr = varstr + '/' + 'maps' + '/' + str(i)
+     #print(varstr)
+     nmap = nbmap[i]
+     mapstable = ''
+     for x in range(nmap):
+         varstr2 = varstr + '/' + str(x) + '.map'
+         print(varstr2)
+         noconnection = False
+         mapfilefinal = openRomRead(varstr2)
+         largeurh = readRomData(mapfilefinal ,'00', 4).decode(encoding="utf-8")
+         largueurd = conv_hex2dec(largeurh[0:2])
+         hauteurh = readRomData(mapfilefinal ,'04', 4).decode(encoding="utf-8")
+         hauteurd = conv_hex2dec(hauteurh[0:2])
+         tileset1 = readRomData(mapfilefinal ,'08', 4).decode(encoding="utf-8")
+         tileset2 = readRomData(mapfilefinal ,'0C', 4).decode(encoding="utf-8")
+         largbordh = readRomByte(mapfilefinal, '10').decode(encoding="utf-8")
+         largbordd = conv_hex2dec(largbordh)
+         hautbordh = readRomByte(mapfilefinal, '11').decode(encoding="utf-8")
+         hautbordd = conv_hex2dec(hautbordh)
+         size = (hautbordd * largbordd) * 2
+         block = readRomData(mapfilefinal , '28' , 12).decode(encoding="utf-8")
+         bordure = readRomData(mapfilefinal , '34' , size)
+         varhex = add2hex('34', size)
+         mapcollseize = largueurd * hauteurd * 2
+         mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize)
+         vardec = len(mapfilefinal)
+         varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
+         connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
+         print(connectionh)
+         connectiond = conv_hex2dec(connectionh)
+         varadr = add2hex(varadr,4)
+         varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
+         varadr = varadr[2:4] +varadr[0:2]
+         connexions = readRomData(mapfilefinal, varadr, connectiond*12)
+         if connexions == '':
             noconnection = True
         
 print('────────▄███████████▄────────')
