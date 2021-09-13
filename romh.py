@@ -74,8 +74,6 @@ def readRomByte(hexRom, hexOffset):
 
 
 def readRomData(hexRom, hexOffset, length):
-    if hexOffset[0:2] == "0x":
-        hexOffset = hexOffset[2:]
     decOffset = conv_hex2dec(hexOffset)
     data = hexRom[decOffset * 2:decOffset * 2 + length * 2]
     return data

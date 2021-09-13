@@ -126,6 +126,8 @@ for i in range(numbofbank):
          mapfilefinal = openRomRead(varstr2)
          largeurh = readRomData(mapfilefinal, 0, 4)
          hauteurh = readRomData(mapfilefinal, 4, 4)
+         largeurh = largeurh[6:8] + largeurh[4:6] + largeurh[2:4] + largeurh[0:2]
+         hauteurh = hauteurh[6:8] + hauteurh[4:6] + hauteurh[2:4] + hauteurh[0:2]
         
         
 print('────────▄███████████▄────────')
