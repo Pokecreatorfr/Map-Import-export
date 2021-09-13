@@ -124,12 +124,31 @@ for i in range(numbofbank):
          print(varstr2)
          noconnection = False
          mapfilefinal = openRomRead(varstr2)
+         # Dimention map
          largeurh = readRomData(mapfilefinal, 0, 4)
          hauteurh = readRomData(mapfilefinal, 4, 4)
          largeurh = largeurh[6:8] + largeurh[4:6] + largeurh[2:4] + largeurh[0:2]
          hauteurh = hauteurh[6:8] + hauteurh[4:6] + hauteurh[2:4] + hauteurh[0:2]
-        
-        
+         largueurd = conv_hex2dec(largeurh)
+         hauteurd = conv_hex2dec(hauteurh)
+         # Tilesets
+         tileset1 = readRomData(mapfilefinal, 8, 4)
+         tileset2 = readRomData(mapfilefinal, C, 4)
+         tileset1 = tileset1[6:8] + tileset1[4:6] + tileset1[2:4] + tileset1[0:2]
+         tileset2 = tileset2[6:8] + tileset2[4:6] + tileset2[2:4] + tileset2[0:2]
+         tileset1d = conv_hex2dec(tileset1)
+         tileset2d = conv_hex2dec(tileset2)
+         # Dimention Bloc de bordure
+         largbordh = readRomByte(mapfilefinal, 10)
+         hautbordh = readRomByte(mapfilefinal, 11)
+         largbordd = conv_hex2dec(largbordh)
+         hautbordd = conv_hex2dec(hautbordh)
+         # Bloc de bordure
+         blockbord = readRomData(mapfilefinal, 31, (largbordd*hautbordd*2))
+         #Données map
+         mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2))
+
+
 print('────────▄███████████▄────────')
 print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
 print('────███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███────')
