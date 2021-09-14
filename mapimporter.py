@@ -147,6 +147,9 @@ for i in range(numbofbank):
          blockbord = readRomData(mapfilefinal, 31, (largbordd*hautbordd*2))
          #Données map
          mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)) 
+         # Bloc de donnnées ( musique , type de combat ...)
+         block = readRomData(mapfilefinal, 28, 11)
+         
 
 
 print('────────▄███████████▄────────')

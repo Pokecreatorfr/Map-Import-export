@@ -20,8 +20,10 @@ def add2hex(hex, numb):
     return functionhexvar
 
 def makepointer(adress):
-    if len(adress) == 8:
-        functionhexvar = '09' + adress[2:8]
+    fonctiondecvar = conv_hex2dec(adress)
+    adress = conv_dec2hex(fonctiondecvar) # Enleve les '0' inutiles 
+    if len(adress) =< 8 :
+        print(error) # les roms GBA ne peuvent avoir un taille maximale  de 32 Mo (0x2000000)
     if len(adress) == 7:
         functionhexvar = '09' + adress[1:7]
     if len(adress) == 6:
