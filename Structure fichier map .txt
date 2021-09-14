@@ -18,7 +18,7 @@
 
 00000034-(Fin du bloc) = Bloc de bordure ( longueur = largeur bloc de bordure*hauteur bloc de bordure*2)
 (Fin du bloc precedent)-(FIN du bloc)= Données maps et mouvements (  longueur = largeur*hauteur*2)
-(FIN du bloc precedent)-(FIN du bloc)= Données evenements:
+(FIN du bloc precedent)-(FIN du bloc)= Données evenements
 
 personage = nbscriptpnj * 24
 warp = nbwarp * 8
