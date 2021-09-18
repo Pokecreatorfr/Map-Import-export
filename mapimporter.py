@@ -125,32 +125,37 @@ for i in range(numbofbank):
          noconnection = False
          mapfilefinal = openRomRead(varstr2)
          # Dimention map
-         largeurh = readRomData(mapfilefinal, 0, 4)
-         hauteurh = readRomData(mapfilefinal, 4, 4)
+         largeurh = readRomData(mapfilefinal, '0x0', 4).decode(encoding="utf-8")
+         hauteurh = readRomData(mapfilefinal, '0x4', 4).decode(encoding="utf-8")
          largeurh = largeurh[6:8] + largeurh[4:6] + largeurh[2:4] + largeurh[0:2]
          hauteurh = hauteurh[6:8] + hauteurh[4:6] + hauteurh[2:4] + hauteurh[0:2]
+         print(largeurh)
          largueurd = conv_hex2dec(largeurh)
          hauteurd = conv_hex2dec(hauteurh)
          # Tilesets
-         tileset1 = readRomData(mapfilefinal, 8, 4)
-         tileset2 = readRomData(mapfilefinal, C, 4)
+         tileset1 = readRomData(mapfilefinal, '0x8', 4).decode(encoding="utf-8")
+         tileset2 = readRomData(mapfilefinal, '0xC', 4).decode(encoding="utf-8")
          tileset1 = tileset1[6:8] + tileset1[4:6] + tileset1[2:4] + tileset1[0:2]
          tileset2 = tileset2[6:8] + tileset2[4:6] + tileset2[2:4] + tileset2[0:2]
          tileset1d = conv_hex2dec(tileset1)
          tileset2d = conv_hex2dec(tileset2)
          # Dimention Bloc de bordure
-         largbordh = readRomByte(mapfilefinal, 10)
-         hautbordh = readRomByte(mapfilefinal, 11)
+         largbordh = readRomByte(mapfilefinal, '0x10').decode(encoding="utf-8")
+         hautbordh = readRomByte(mapfilefinal, '0x11').decode(encoding="utf-8")
          largbordd = conv_hex2dec(largbordh)
          hautbordd = conv_hex2dec(hautbordh)
          # Bloc de bordure
-         blockbord = readRomData(mapfilefinal, 31, (largbordd*hautbordd*2))
+         blockbord = readRomData(mapfilefinal, 31, (largbordd*hautbordd*2)).decode(encoding="utf-8")
          #Données map
-         mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)) 
+         mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)) .decode(encoding="utf-8")
          # Bloc de donnnées ( musique , type de combat ...)
-         block = readRomData(mapfilefinal, 28, 11)
+         block = readRomData(mapfilefinal, 28, 11).decode(encoding="utf-8")
          # Connexions
-         connection = readRomData(mapfilefinal, (readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-2))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-3))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-4)))), ((len(mapfilefinal)/2)-4) - (readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-2))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-3))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-4)))))
+         varhex = readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-2))).decode(encoding="utf-8")
+         varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-3))).decode(encoding="utf-8")
+         varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-4))).decode(encoding="utf-8")
+         print(varhex)
+         connection = readRomData(mapfilefinal,varhex , (int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))
          print(connection)
 
 
