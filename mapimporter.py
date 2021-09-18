@@ -149,7 +149,9 @@ for i in range(numbofbank):
          mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)) 
          # Bloc de donnnées ( musique , type de combat ...)
          block = readRomData(mapfilefinal, 28, 11)
-         
+         # Connexions
+         connection = readRomData(mapfilefinal, (readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-2))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-3))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-4)))), ((len(mapfilefinal)/2)-4) - (readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-2))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-3))) + readRomByte(mapfilefinal, conv_dec2hex(((len(mapfilefinal)/2)-4)))))
+         print(connection)
 
 
 print('────────▄███████████▄────────')
