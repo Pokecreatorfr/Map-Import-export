@@ -157,7 +157,8 @@ for i in range(numbofbank):
          print(varhex)
          connection = readRomData(mapfilefinal,varhex , (int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))
          print(connection)
-
+         connectiond = int((((int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))-4)/12)
+         print(connectiond)
 
 print('────────▄███████████▄────────')
 print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
