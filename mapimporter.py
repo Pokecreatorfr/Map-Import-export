@@ -147,18 +147,28 @@ for i in range(numbofbank):
          # Bloc de bordure
          blockbord = readRomData(mapfilefinal, 31, (largbordd*hautbordd*2)).decode(encoding="utf-8")
          #Données map
-         mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)) .decode(encoding="utf-8")
+         mapcoll = readRomData(mapfilefinal, 31+(largbordd*hautbordd*2), (largueurd*hauteurd*2)).decode(encoding="utf-8")
+         print(mapcoll)
          # Bloc de donnnées ( musique , type de combat ...)
          block = readRomData(mapfilefinal, 28, 11).decode(encoding="utf-8")
          # Connexions
          varhex = readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-2))).decode(encoding="utf-8")
          varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-3))).decode(encoding="utf-8")
          varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-4))).decode(encoding="utf-8")
-         print(varhex)
+         #print(varhex)
          connection = readRomData(mapfilefinal,varhex , (int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))
-         print(connection)
+         #print(connection)
          connectiond = int((((int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))-4)/12)
-         print(connectiond)
+         #print(connectiond)
+         nbscriptpnj = readRomByte(mapfilefinal, readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8") ).decode(encoding="utf-8")
+         nbwarp = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),1)).decode(encoding="utf-8")
+         nbscript = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),2)).decode(encoding="utf-8")
+         nbpancarte = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),3)).decode(encoding="utf-8")
+         scriptadr = readRomData(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),4), 2).decode(encoding="utf-8")
+         scriptadr = scriptadr[2:4] +scriptadr[0:2]
+         Scriptdata = readRomData(mapfilefinal, scriptadr, (conv_hex2dec(nbscriptpnj)*24 + conv_hex2dec(nbwarp)*8 + conv_hex2dec(nbscript)*16 + conv_hex2dec(nbpancarte)*12)).decode(encoding="utf-8")
+         eventdata = rea
+
 
 print('────────▄███████████▄────────')
 print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
