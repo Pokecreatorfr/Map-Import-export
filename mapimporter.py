@@ -167,7 +167,7 @@ for i in range(numbofbank):
          scriptadr = readRomData(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),4), 2).decode(encoding="utf-8")
          scriptadr = scriptadr[2:4] +scriptadr[0:2]
          Scriptdata = readRomData(mapfilefinal, scriptadr, (conv_hex2dec(nbscriptpnj)*24 + conv_hex2dec(nbwarp)*8 + conv_hex2dec(nbscript)*16 + conv_hex2dec(nbpancarte)*12)).decode(encoding="utf-8")
-         eventdata = rea
+         
 
 
 print('────────▄███████████▄────────')
