@@ -171,7 +171,6 @@ for i in range(numbofbank):
          warp = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2): (conv_hex2dec(nbwarp) * 8 * 2)]
          script = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) : (conv_hex2dec(nbscript) * 16 * 2)]
          pancarte = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2): ]
-
          #Construction de la maptable 1
          maptable1 = largeurh + hauteurh
          varadr = searchdatainrom(hexrom, blockbord)
@@ -184,12 +183,14 @@ for i in range(numbofbank):
              varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
              hexrom = writedatainrom(hexrom, mapcoll, varadr)
          maptable1 = maptable1 + varadr
-         varadr = makepointer(conv_dec2hex((tileset1 * 24) + tilesetstart))
+         varadr = makepointer(conv_dec2hex((tileset1d * 24) + tilesetstart))
+         print(varadr)
          maptable1 = maptable1 + varadr
-         varadr = makepointer(conv_dec2hex((tileset2 * 24) + tilesetstart))
-         maptable1 = maptable1 + varadr + mapfilefinal[32:36]
+         varadr = makepointer(conv_dec2hex((tileset2d * 24) + tilesetstart))
+         maptable1 = maptable1 + varadr + mapfilefinal[32:36].decode(encoding="utf-8")
          #print(vardec)
          #Construction de la maptable 2
+         
 
              
 
