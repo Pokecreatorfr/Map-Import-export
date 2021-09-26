@@ -168,8 +168,8 @@ for i in range(numbofbank):
          scriptadr = scriptadr[2:4] +scriptadr[0:2]
          Scriptdata = readRomData(mapfilefinal, scriptadr, (conv_hex2dec(nbscriptpnj)*24 + conv_hex2dec(nbwarp)*8 + conv_hex2dec(nbscript)*16 + conv_hex2dec(nbpancarte)*12)).decode(encoding="utf-8")
          scriptpnj = Scriptdata[0:(conv_hex2dec(nbscriptpnj )* 24 * 2)]
-         warp = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2): (conv_hex2dec(nbwarp) * 8 * 2)]
-         script = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) : (conv_hex2dec(nbscript) * 16 * 2)]
+         warp = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2): (conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2)]
+         script = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) : (conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2)]
          pancarte = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2): ]
          #Construction de la maptable 1
          maptable1 = largeurh + hauteurh
@@ -188,9 +188,34 @@ for i in range(numbofbank):
          maptable1 = maptable1 + varadr
          varadr = makepointer(conv_dec2hex((tileset2d * 24) + tilesetstart))
          maptable1 = maptable1 + varadr + mapfilefinal[32:36].decode(encoding="utf-8") +'0000'
-         print(maptable1)
+         #print(maptable1)
          #print(vardec)
          #Construction de la maptable 2
+         #print(scriptpnj)
+         #print(warp)
+         #print(script)
+         #print(pancarte)
+         varadr = searchdatainrom(hexrom, scriptpnj)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
+             hexrom = writedatainrom(hexrom, scriptpnj, varadr)
+         scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + makepointer(varadr)
+         varadr =  searchdatainrom(hexrom, warp)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(warp))
+             hexrom = writedatainrom(hexrom, warp, varadr)
+         scripttable =  scripttable + makepointer(varadr)
+         varadr = searchdatainrom(hexrom, script)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(script))
+             hexrom = writedatainrom(hexrom, script, varadr)
+         scripttable =  scripttable + makepointer(varadr)
+         varadr = searchdatainrom(hexrom, pancarte)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(pancarte))
+             hexrom = writedatainrom(hexrom, pancarte, varadr)
+         scripttable =  scripttable + makepointer(varadr)
+         #print(scripttable)
          
 
              
