@@ -177,17 +177,18 @@ for i in range(numbofbank):
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
              hexrom = writedatainrom(hexrom, blockbord, varadr)
-         maptable1 = maptable1 + varadr
+         maptable1 = maptable1 + makepointer(varadr)
          varadr = searchdatainrom(hexrom, mapcoll)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
              hexrom = writedatainrom(hexrom, mapcoll, varadr)
-         maptable1 = maptable1 + varadr
+         maptable1 = maptable1 + makepointer(varadr)
          varadr = makepointer(conv_dec2hex((tileset1d * 24) + tilesetstart))
-         print(varadr)
+         #print(varadr)
          maptable1 = maptable1 + varadr
          varadr = makepointer(conv_dec2hex((tileset2d * 24) + tilesetstart))
-         maptable1 = maptable1 + varadr + mapfilefinal[32:36].decode(encoding="utf-8")
+         maptable1 = maptable1 + varadr + mapfilefinal[32:36].decode(encoding="utf-8") +'0000'
+         print(maptable1)
          #print(vardec)
          #Construction de la maptable 2
          
