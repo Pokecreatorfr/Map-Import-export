@@ -167,13 +167,29 @@ for i in range(numbofbank):
          scriptadr = readRomData(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),4), 2).decode(encoding="utf-8")
          scriptadr = scriptadr[2:4] +scriptadr[0:2]
          Scriptdata = readRomData(mapfilefinal, scriptadr, (conv_hex2dec(nbscriptpnj)*24 + conv_hex2dec(nbwarp)*8 + conv_hex2dec(nbscript)*16 + conv_hex2dec(nbpancarte)*12)).decode(encoding="utf-8")
+         scriptpnj = Scriptdata[0:(conv_hex2dec(nbscriptpnj )* 24 * 2)]
+         warp = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2): (conv_hex2dec(nbwarp) * 8 * 2)]
+         script = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) : (conv_hex2dec(nbscript) * 16 * 2)]
+         pancarte = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2): ]
+
          #Construction de la maptable 1
          maptable1 = largeurh + hauteurh
-         vardec = hexrom.find(mapcoll)
+         varadr = searchdatainrom(hexrom, blockbord)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
+             hexrom = writedatainrom(hexrom, blockbord, varadr)
+         maptable1 = maptable1 + varadr
+         varadr = searchdatainrom(hexrom, mapcoll)
+         if varadr == '00': 
+             varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
+             hexrom = writedatainrom(hexrom, mapcoll, varadr)
+         maptable1 = maptable1 + varadr
+         varadr = makepointer(conv_dec2hex((tileset1 * 24) + tilesetstart))
+         maptable1 = maptable1 + varadr
+         varadr = makepointer(conv_dec2hex((tileset2 * 24) + tilesetstart))
+         maptable1 = maptable1 + varadr + mapfilefinal[32:36]
          #print(vardec)
-         if vardec == -1 :
-             vardec = hexrom.find('f'*len(mapcoll))
-         varadr = conv_dec2hex(int(vardec/2))
+         #Construction de la maptable 2
 
              
 
