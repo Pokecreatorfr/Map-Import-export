@@ -199,24 +199,34 @@ for i in range(numbofbank):
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
              hexrom = writedatainrom(hexrom, scriptpnj, varadr)
+         varadr = makepointer(varadr)
          if nbscriptpnj == '00':
              varadr = '00000000'
-         scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + makepointer(varadr)
+         scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + varadr
          varadr =  searchdatainrom(hexrom, warp)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(warp))
              hexrom = writedatainrom(hexrom, warp, varadr)
-         scripttable =  scripttable + makepointer(varadr)
+         varadr = makepointer(varadr)
+         if nbwarp == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
          varadr = searchdatainrom(hexrom, script)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(script))
              hexrom = writedatainrom(hexrom, script, varadr)
-         scripttable =  scripttable + makepointer(varadr)
+         varadr = makepointer(varadr)
+         if nbscriptpnj == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
          varadr = searchdatainrom(hexrom, pancarte)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(pancarte))
              hexrom = writedatainrom(hexrom, pancarte, varadr)
-         scripttable =  scripttable + makepointer(varadr)
+         varadr = makepointer(varadr)
+         if nbpancarte == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
          #print(scripttable)
          
 
