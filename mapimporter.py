@@ -199,6 +199,8 @@ for i in range(numbofbank):
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
              hexrom = writedatainrom(hexrom, scriptpnj, varadr)
+         if nbscriptpnj == '00':
+             varadr = '00000000'
          scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + makepointer(varadr)
          varadr =  searchdatainrom(hexrom, warp)
          if varadr == '00': 
