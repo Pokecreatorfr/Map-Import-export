@@ -6,6 +6,7 @@ from binascii import unhexlify
 from binascii import hexlify
 
 filename = "BPRE0.gba"
+bankend = False
 hexrom = openRomRead(filename)
 banktablepointer = readpointer(hexrom, '05524C')
 banktablepointer = add2hex(banktablepointer, -4)
@@ -121,7 +122,7 @@ for i in range(numbofbank):
      mapstable = ''
      for x in range(nmap):
          varstr2 = varstr + '/' + str(x) + '.map'
-         print(varstr2)
+         #print(varstr2)
          noconnection = False
          mapfilefinal = openRomRead(varstr2)
          # Dimention map
@@ -156,10 +157,10 @@ for i in range(numbofbank):
          varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-4))).decode(encoding="utf-8")
          #print(varhex)
          connection = readRomData(mapfilefinal,varhex , (int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex)).decode(encoding="utf-8")
-         print(connection)
+         #print(connection)
          #print(connection)
          connectiond = int((((int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))-4)/12)
-         print(connectiond)
+         #print(connectiond)
          #print(connectiond)
          #Scripts
          nbscriptpnj = readRomByte(mapfilefinal, readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8") ).decode(encoding="utf-8")
@@ -268,7 +269,7 @@ for i in range(numbofbank):
          else:
              varadr = '00000000'
          maptable2 = maptable2 + varadr + block
-         if x == nmap:
+         if x+1 == nmap:
              bankend = True
      varadr = searchdatainrom(hexrom, maptable1)
      if varadr == '00': 
@@ -290,7 +291,10 @@ if varadr == '00':
     hexrom = write_in_hex_string(hexrom, varadr, banktable)
 varadr = makepointer(varadr)
 write_in_hex_string(hexrom, '05524C', varadr)
-         
+print(banktable)
+firered = open(filename,'wb')
+firered.write(unhexlify(hexrom))
+firered.close()
 
              
 
