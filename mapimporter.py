@@ -176,12 +176,12 @@ for i in range(numbofbank):
          varadr = searchdatainrom(hexrom, blockbord)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
-             hexrom = writedatainrom(hexrom, blockbord, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, blockbord)
          maptable1 = maptable1 + makepointer(varadr)
          varadr = searchdatainrom(hexrom, mapcoll)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
-             hexrom = writedatainrom(hexrom, mapcoll, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, mapcoll)
          maptable1 = maptable1 + makepointer(varadr)
          varadr = makepointer(conv_dec2hex((tileset1d * 24) + tilesetstart))
          #print(varadr)
@@ -198,7 +198,7 @@ for i in range(numbofbank):
          varadr = searchdatainrom(hexrom, scriptpnj)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
-             hexrom = writedatainrom(hexrom, scriptpnj, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, scriptpnj)
          varadr = makepointer(varadr)
          if nbscriptpnj == '00':
              varadr = '00000000'
@@ -206,7 +206,7 @@ for i in range(numbofbank):
          varadr =  searchdatainrom(hexrom, warp)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(warp))
-             hexrom = writedatainrom(hexrom, warp, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, warp)
          varadr = makepointer(varadr)
          if nbwarp == '00':
              varadr = '00000000'
@@ -214,7 +214,7 @@ for i in range(numbofbank):
          varadr = searchdatainrom(hexrom, script)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(script))
-             hexrom = writedatainrom(hexrom, script, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, script)
          varadr = makepointer(varadr)
          if nbscriptpnj == '00':
              varadr = '00000000'
@@ -222,12 +222,16 @@ for i in range(numbofbank):
          varadr = searchdatainrom(hexrom, pancarte)
          if varadr == '00': 
              varadr = searchdatainrom(hexrom, 'f' * len(pancarte))
-             hexrom = writedatainrom(hexrom, pancarte, varadr)
+             hexrom = write_in_hex_string(hexrom, varadr, pancarte)
          varadr = makepointer(varadr)
          if nbpancarte == '00':
              varadr = '00000000'
          scripttable =  scripttable + varadr
          #print(scripttable)
+         #Event Script Table
+         eventscripttable = '00ff'
+         #Connexion Table
+         
          
 
              
