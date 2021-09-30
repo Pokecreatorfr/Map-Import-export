@@ -177,12 +177,12 @@ for i in range(numbofbank):
          #Construction de la maptable 1
          maptable1 = largeurh + hauteurh
          varadr = searchdatainrom(hexrom, blockbord)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
              hexrom = write_in_hex_string(hexrom, varadr, blockbord)
          maptable1 = maptable1 + makepointer(varadr)
          varadr = searchdatainrom(hexrom, mapcoll)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
              hexrom = write_in_hex_string(hexrom, varadr, mapcoll)
          maptable1 = maptable1 + makepointer(varadr)
@@ -199,7 +199,8 @@ for i in range(numbofbank):
          #print(script)
          #print(pancarte)
          varadr = searchdatainrom(hexrom, scriptpnj)
-         if varadr == '00': 
+         print(scriptpnj)
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
              hexrom = write_in_hex_string(hexrom, varadr, scriptpnj)
          varadr = makepointer(varadr)
@@ -207,7 +208,7 @@ for i in range(numbofbank):
              varadr = '00000000'
          scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + varadr
          varadr =  searchdatainrom(hexrom, warp)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(warp))
              hexrom = write_in_hex_string(hexrom, varadr, warp)
          varadr = makepointer(varadr)
@@ -215,7 +216,7 @@ for i in range(numbofbank):
              varadr = '00000000'
          scripttable =  scripttable + varadr
          varadr = searchdatainrom(hexrom, script)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(script))
              hexrom = write_in_hex_string(hexrom, varadr, script)
          varadr = makepointer(varadr)
@@ -223,7 +224,7 @@ for i in range(numbofbank):
              varadr = '00000000'
          scripttable =  scripttable + varadr
          varadr = searchdatainrom(hexrom, pancarte)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(pancarte))
              hexrom = write_in_hex_string(hexrom, varadr, pancarte)
          varadr = makepointer(varadr)
@@ -236,33 +237,34 @@ for i in range(numbofbank):
          #Connexion Table
          if connectiond != 0:
              varadr = searchdatainrom(hexrom, connection)
-             if varadr == '00': 
+             if varadr == '0': 
                  varadr = searchdatainrom(hexrom, 'f' * len(connection))
                  hexrom = write_in_hex_string(hexrom, varadr, connection)
                  varadr = makepointer(varadr)
                  connexiontable = '0' + conv_dec2hex(connectiond) + '000000' + varadr
          #Innsertion des differentes tables et création de maptable2
+         print(maptable1)
          varadr = searchdatainrom(hexrom, maptable1)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
              hexrom = write_in_hex_string(hexrom, varadr, maptable1)
          varadr = makepointer(varadr)
          maptable2 = varadr
          varadr = searchdatainrom(hexrom, scripttable)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(scripttable))
              hexrom = write_in_hex_string(hexrom, varadr, scripttable)
          varadr = makepointer(varadr)
          maptable2 = maptable2 + varadr
          varadr = searchdatainrom(hexrom, eventscripttable)
-         if varadr == '00': 
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(eventscripttable))
              hexrom = write_in_hex_string(hexrom, varadr, eventscripttable)
          varadr = makepointer(varadr)
          maptable2 = maptable2 + varadr
          if connectiond == 0:
              varadr = searchdatainrom(hexrom, eventscripttable)
-             if varadr == '00': 
+             if varadr == '0': 
                  varadr = searchdatainrom(hexrom, 'f' * len(eventscripttable))
                  hexrom = write_in_hex_string(hexrom, varadr, eventscripttable)
              varadr = makepointer(varadr)
@@ -272,11 +274,11 @@ for i in range(numbofbank):
          if x+1 == nmap:
              bankend = True
      varadr = searchdatainrom(hexrom, maptable1)
-     if varadr == '00': 
+     if varadr == '0': 
          varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
          hexrom = write_in_hex_string(hexrom, varadr, maptable1)
      varadr = makepointer(varadr)
-     mapstable = mapstable + varadr
+     mapstable = mapstable + varadry
      if bankend == True:
          varadr = searchdatainrom(hexrom, mapstable)
          if varadr == '00': 
@@ -286,7 +288,8 @@ for i in range(numbofbank):
          banktable = banktable + varadr
          bankend = False
 varadr = searchdatainrom(hexrom, banktable)
-if varadr == '00': 
+print(varadr)
+if varadr == '0': 
     varadr = searchdatainrom(hexrom, 'f' * len(banktable))
     hexrom = write_in_hex_string(hexrom, varadr, banktable)
 varadr = makepointer(varadr)
