@@ -273,12 +273,13 @@ for i in range(numbofbank):
          maptable2 = maptable2 + varadr + block
          if x+1 == nmap:
              bankend = True
+         
      varadr = searchdatainrom(hexrom, maptable1)
      if varadr == '0': 
          varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
          hexrom = write_in_hex_string(hexrom, varadr, maptable1)
      varadr = makepointer(varadr)
-     mapstable = mapstable + varadry
+     mapstable = mapstable + varadr
      if bankend == True:
          varadr = searchdatainrom(hexrom, mapstable)
          if varadr == '00': 
