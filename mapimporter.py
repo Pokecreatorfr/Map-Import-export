@@ -117,12 +117,12 @@ hexrom = openRomRead(filename).decode(encoding="utf-8")
 for i in range(numbofbank):
      varstr = os.getcwd()
      varstr = varstr + '/' + 'maps' + '/' + str(i)
-     #print(varstr)
+     print(varstr)
      nmap = nbmap[i]
      mapstable = ''
      for x in range(nmap):
          varstr2 = varstr + '/' + str(x) + '.map'
-         #print(varstr2)
+         print(varstr2)
          noconnection = False
          mapfilefinal = openRomRead(varstr2)
          # Dimention map
@@ -199,7 +199,7 @@ for i in range(numbofbank):
          #print(script)
          #print(pancarte)
          varadr = searchdatainrom(hexrom, scriptpnj)
-         print(scriptpnj)
+         #print(scriptpnj)
          if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
              hexrom = write_in_hex_string(hexrom, varadr, scriptpnj)
@@ -243,12 +243,13 @@ for i in range(numbofbank):
                  varadr = makepointer(varadr)
                  connexiontable = '0' + conv_dec2hex(connectiond) + '000000' + varadr
          #Innsertion des differentes tables et création de maptable2
-         print(maptable1)
+         #print(maptable1)
          varadr = searchdatainrom(hexrom, maptable1)
          if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
              hexrom = write_in_hex_string(hexrom, varadr, maptable1)
          varadr = makepointer(varadr)
+         print(varadr)
          maptable2 = varadr
          varadr = searchdatainrom(hexrom, scripttable)
          if varadr == '0': 
@@ -274,31 +275,35 @@ for i in range(numbofbank):
          if x+1 == nmap:
              bankend = True
          
-     varadr = searchdatainrom(hexrom, maptable1)
+     varadr = searchdatainrom(hexrom, maptable2)
      if varadr == '0': 
-         varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
-         hexrom = write_in_hex_string(hexrom, varadr, maptable1)
+         varadr = searchdatainrom(hexrom, 'f' * len(maptable2))
+         hexrom = write_in_hex_string(hexrom, varadr, maptable2)
      varadr = makepointer(varadr)
      mapstable = mapstable + varadr
+     print(mapstable)
      if bankend == True:
          varadr = searchdatainrom(hexrom, mapstable)
-         if varadr == '00': 
+         print(varadr)
+         if varadr == '0': 
              varadr = searchdatainrom(hexrom, 'f' * len(mapstable))
              hexrom = write_in_hex_string(hexrom, varadr, mapstable)
+             print(varadr)
          varadr = makepointer(varadr)
          banktable = banktable + varadr
+         
          bankend = False
 varadr = searchdatainrom(hexrom, banktable)
-print(varadr)
 if varadr == '0': 
     varadr = searchdatainrom(hexrom, 'f' * len(banktable))
     hexrom = write_in_hex_string(hexrom, varadr, banktable)
 varadr = makepointer(varadr)
-write_in_hex_string(hexrom, '05524C', varadr)
-print(banktable)
-firered = open(filename,'wb')
-firered.write(unhexlify(hexrom))
-firered.close()
+print(varadr)
+fonctiondecvar = 2*conv_hex2dec('5524C')
+hexrom = hexrom[0:fonctiondecvar] + varadr + hexrom[(fonctiondecvar+len(varadr)):]
+with open("BPRE0.gba","wb") as f:
+    f.write(unhexlify(hexrom))
+    f.close()
 
              
 
