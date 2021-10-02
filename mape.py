@@ -51,7 +51,7 @@ def writedatainrom(rom, data, adress):
     fonctionhexvar.close()
 
 def searchdatainrom(rom, data):
-    fonctionhexvar = conv_dec2hex(rom.find(data))
+    fonctionhexvar = conv_dec2hex(rom.find(data , 6291456))
     if fonctionhexvar == 'x1':
         fonctionhexvar = '00'
     if fonctionhexvar != '00':
