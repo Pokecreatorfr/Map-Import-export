@@ -6,6 +6,7 @@ from binascii import unhexlify
 from binascii import hexlify
 
 filename = "BPRE0.gba"
+bankend = False
 hexrom = openRomRead(filename)
 banktablepointer = readpointer(hexrom, '05524C')
 banktablepointer = add2hex(banktablepointer, -4)
@@ -112,244 +113,201 @@ for i in range(numbofbank):
     nbmap[i] = len(files)
 
 filename = "BPRE0.gba"
+hexrom = openRomRead(filename).decode(encoding="utf-8")
 for i in range(numbofbank):
-    hexrom = openRomRead(filename)
-    varstr = os.getcwd()
-    varstr = varstr + '/' + 'maps' + '/' + str(i)
-    #print(varstr)
-    nmap = nbmap[i]
-    mapstable = ''
-    for x in range(nmap):
-        hexrom = openRomRead(filename)
-        varstr2 = varstr + '/' + str(x) + '.map'
-        print(varstr2)
-        noconnection = False
-        mapfilefinal = openRomRead(varstr2)
-        largeurh = readRomData(mapfilefinal ,'00', 4).decode(encoding="utf-8")
-        largueurd = conv_hex2dec(largeurh[0:2])
-        hauteurh = readRomData(mapfilefinal ,'04', 4).decode(encoding="utf-8")
-        hauteurd = conv_hex2dec(hauteurh[0:2])
-        tileset1 = readRomData(mapfilefinal ,'08', 4).decode(encoding="utf-8")
-        tileset2 = readRomData(mapfilefinal ,'0C', 4).decode(encoding="utf-8")
-        largbordh = readRomByte(mapfilefinal, '10').decode(encoding="utf-8")
-        largbordd = conv_hex2dec(largbordh)
-        hautbordh = readRomByte(mapfilefinal, '11').decode(encoding="utf-8")
-        hautbordd = conv_hex2dec(hautbordh)
-        size = (hautbordd * largbordd) * 2
-        block = readRomData(mapfilefinal , '28' , 12).decode(encoding="utf-8")
-        bordure = readRomData(mapfilefinal , '34' , size)
-        varhex = add2hex('34', size)
-        mapcollseize = largueurd * hauteurd * 2
-        mapcoll = readRomData(mapfilefinal ,varhex, mapcollseize)
-        vardec = len(mapfilefinal)
-        varadr = mapfilefinal.decode(encoding="utf-8")[74:76] + mapfilefinal.decode(encoding="utf-8")[72:74]
-        connectionh = readRomByte(mapfilefinal,varadr).decode(encoding="utf-8")
-        print(connectionh)
-        connectiond = conv_hex2dec(connectionh)
-        varadr = add2hex(varadr,4)
-        varadr = readRomData(mapfilefinal, varadr, 2).decode(encoding="utf-8")
-        varadr = varadr[2:4] +varadr[0:2]
-        connexions = readRomData(mapfilefinal, varadr, connectiond*12)
-        print(connexions)
-        #print(mapcoll)
-        #print(varadr)
-        #print(connexions)
-        if connexions == '':
-            noconnection = True
-        varadr = readRomData(mapfilefinal,'1C', 2).decode(encoding="utf-8")
-        varadr = varadr[2:4] + varadr[0:2]
-        #print(varadr)
-        pnjscripth = readRomByte(mapfilefinal, varadr).decode(encoding="utf-8")
-        warph = readRomByte(mapfilefinal, add2hex(varadr, 1)).decode(encoding="utf-8")
-        scripth = readRomByte(mapfilefinal, add2hex(varadr, 2)).decode(encoding="utf-8")
-        pancarteh = readRomByte(mapfilefinal, add2hex(varadr, 3)).decode(encoding="utf-8")
-        pnjscriptd = conv_hex2dec(pnjscripth)
-        warpd = conv_hex2dec(warph)
-        scriptd = conv_hex2dec(scripth)
-        pancarted = conv_hex2dec(pancarteh)
-        #print(pnjscriptd, warpd, scriptd, pancarted)
-        varadr2 = readRomData(mapfilefinal, add2hex(varadr,4), 4).decode(encoding="utf-8")
-        varadr2 = varadr2[6:8] + varadr2[4:6] +varadr2[2:4] + varadr2[0:2]
-        pnjscript = readRomData(mapfilefinal,varadr2, pnjscriptd*24)
-        varadr2 = readRomData(mapfilefinal, add2hex(varadr,8), 4).decode(encoding="utf-8")
-        varadr2 = varadr2[6:8] + varadr2[4:6] +varadr2[2:4] + varadr2[0:2]
-        warp = readRomData(mapfilefinal,varadr2, warpd*8)
-        varadr2 = readRomData(mapfilefinal, add2hex(varadr,12), 4).decode(encoding="utf-8")
-        varadr2 = varadr2[6:8] + varadr2[4:6] +varadr2[2:4] + varadr2[0:2]
-        script = readRomData(mapfilefinal,varadr2, scriptd*16)
-        varadr2 = readRomData(mapfilefinal, add2hex(varadr,16), 4).decode(encoding="utf-8")
-        varadr2 = varadr2[6:8] + varadr2[4:6] +varadr2[2:4] + varadr2[0:2]
-        pancarte = readRomData(mapfilefinal,varadr2, pancarted*12)
-        varadr3 = searchdatainrom(hexrom, bordure)
-        if conv_hex2dec(varadr3) % 2 != 0 & conv_hex2dec(varadr3) != 0:
-            print('ATTENTION MATHEO TU AS FAIT DE LA MERDE !!!!!')
-        if varadr3 != '0':
-            #print(varadr3)
-            varadr3 = unhexlify(makepointer(varadr3))
-            maptable1 = unhexlify(largeurh) + unhexlify(hauteurh) + varadr3
-        else :
-            varadr3 = searchdatainrom(hexrom,freebyte(int(len(bordure)/2)))
-            writedatainrom(filename, bordure, varadr3)
-            hexrom = openRomRead(filename)
-            varadr3 = unhexlify(makepointer(varadr3))
-            maptable1 = unhexlify(largeurh) + unhexlify(hauteurh) + varadr3
-        varadr3 = searchdatainrom(hexrom, mapcoll)
-        #print(varadr3)
-        if varadr3 != '0':
-            varadr3 = unhexlify(makepointer(varadr3))
-            maptable1 = maptable1 + varadr3
-        else :
-            varadr3 = searchdatainrom(hexrom, freebyte(int(len(mapcoll)/2)))
-            writedatainrom(filename, mapcoll, varadr3)
-            hexrom = openRomRead(filename)
-            varadr3 = unhexlify(makepointer(varadr3))
-            maptable1 = maptable1 + varadr3
-        tileset1 = mapfilefinal[22:24] + mapfilefinal[20:22] + mapfilefinal[18:20] + mapfilefinal[16:18]
-        tileset2 = mapfilefinal[30:32] + mapfilefinal[28:30] + mapfilefinal[26:28] + mapfilefinal[24:26]
-        tileset1 = tileset1.decode(encoding="utf-8")
-        tileset2 = tileset2.decode(encoding="utf-8")
-        tileset1d = conv_hex2dec(tileset1)*24 +tilesetstart
-        tileset2d = conv_hex2dec(tileset2)*24 +tilesetstart
-        print(conv_hex2dec(tileset2),tileset2,tilesetstart,tileset2d)
-        tileset1 = conv_dec2hex(tileset1d)
-        tileset2 = conv_dec2hex(tileset2d)
-        tileset1 = makepointer(tileset1)
-        print(tileset2)
-        tileset2 = makepointer(tileset2)
-        maptable1 = maptable1 + unhexlify(tileset1) + unhexlify(tileset2) + unhexlify(mapfilefinal[32:34]) + unhexlify(mapfilefinal[34:36]) + unhexlify('0000')
-        maptable1 = hexlify(maptable1)
-        if x <= nbmapinrom[i]:
-            varadr3 = readpointer(hexrom, listadre[i])
-            #print(listadre[i], varadr3, add2hex(varadr3, 4*x))
-            varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
-            #print(varadr3)
-            varadr3 = readpointer(hexrom, varadr3)
-            #print(varadr3)
-            writedatainrom(filename, maptable1, varadr3)
-        else:
-            varadr3 = searchdatainrom(hexrom, freebyte(28))
-            writedatainrom(filename, maptable1, varadr3)
-        hexrom = openRomRead(filename)
-        maptable2 = makepointer(varadr3)
-        #print(warph, scripth, pancarteh, pnjscripth)
-        if warph == '00' and scripth == '00' and pancarteh == '00' and pnjscripth =='00':
-            maptable1 = '0000000000000000000000000000000000000000'
-        else:
-            maptable1 = pnjscripth + warph + scripth + pancarteh
-            if pnjscripth == '00':
-                maptable1 = maptable1 + '00000000'
-            else :
-                varadr3 = searchdatainrom(hexrom , pnjscript)
-                if varadr3 != '0':
-                    varadr3 = makepointer(varadr3)
-                else :
-                    varadr3 = searchdatainrom(hexrom,freebyte(int(len(pnjscript)/2)))
-                    writedatainrom(filename, pnjscript, varadr3)
-                    hexrom = openRomRead(filename)
-                    varadr3 = makepointer(varadr3)
-                maptable1 = maptable1 + varadr3
-            if warph == '00':
-                maptable1 = maptable1 + '00000000'
-            else :
-                varadr3 = searchdatainrom(hexrom , warp)
-                if varadr3 != '0':
-                    varadr3 = makepointer(varadr3)
-                else :
-                    varadr3 = searchdatainrom(hexrom ,freebyte(int(len(warp)/2)))
-                    writedatainrom(filename, warp, varadr3)
-                    hexrom = openRomRead(filename)
-                    varadr3 = makepointer(varadr3)
-                maptable1 = maptable1 + varadr3
-            if scripth == '00':
-                maptable1 = maptable1 + '00000000'
-            else :
-                varadr3 = searchdatainrom(hexrom , script)
-                if varadr3 != '0':
-                    varadr3 = makepointer(varadr3)
-                else :
-                    varadr3 = searchdatainrom(hexrom,freebyte(int(len(script)/2)))
-                    writedatainrom(filename, script, varadr3)
-                    hexrom = openRomRead(filename)
-                    varadr3 = makepointer(varadr3)
-                maptable1 = maptable1 + varadr3
-            if pancarteh == '00':
-                maptable1 = maptable1 + '00000000'
-            else :
-                varadr3 = searchdatainrom(hexrom ,pancarte)
-                if varadr3 != '0':
-                    varadr3 = makepointer(varadr3)
-                else :
-                    varadr3 = searchdatainrom(hexrom, freebyte(int(len(pancarte)/2)))
-                    writedatainrom(filename, pancarte, varadr3)
-                    hexrom = openRomRead(filename)
-                    varadr3 = makepointer(varadr3)
-                maptable1 = maptable1 + varadr3
-        if x <= nbmapinrom[i]:
-            varadr3 = readpointer(hexrom, listadre[i])
-            varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
-            varadr3 = readpointer(hexrom, add2hex(varadr3,4))
-            writedatainrom(filename, maptable1, varadr3)
-        else:
-            varadr3 = conv_dec2hex(int(search(filename, 20, 00)))
-            writedatainrom(filename, maptable1, varadr3)
-        hexrom = openRomRead(filename)
-        maptable2 = maptable2 + makepointer(varadr3)
-        varadr3 = conv_dec2hex(int(hexrom[8388608:].find(hexlify(unhexlify('ffffffff')))/2))
-        varadr3 = add2hex(varadr3, 8388608)
-        writedatainrom(filename, '00ff', varadr3)
-        hexrom = openRomRead(filename)
-        maptable2 = maptable2 + makepointer(varadr3)
-        #print(connexions)
-        if connectiond == 0:
-            varadr3 = '00000000'
-        else:
-            varhex = connexions
-            #print(varhex)
-            varadr3 = searchdatainrom(hexrom , varhex)
-            if varadr3 != '0':
-                varadr3 = makepointer(varadr3)
-            else :
-                varhex = 'ff' * int(len(connexions))
-                varadr3 = conv_dec2hex(int(hexrom[8388608:].find(hexlify(unhexlify(varhex)))/2))
-                varadr3 = add2hex(varadr3, 8388608)
-                writedatainrom(filename, connexions, varadr3)
-                hexrom = openRomRead(filename)
-                varadr3 = makepointer(varadr3)
-            maptable1 = connectionh + '000000' + varadr3
-            if x <= nbmapinrom[i]:
-                varadr3 = readpointer(hexrom, listadre[i])
-                varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
-                varadr3 = readpointer(hexrom, add2hex(varadr3,12))
-                writedatainrom(filename, maptable1, varadr3)
-            else:
-                varadr3 = conv_dec2hex(int(search(filename, 10, 00)))
-                writedatainrom(filename, maptable1, varadr3)
-            varadr3 = makepointer(varadr3)
-        maptable2 = maptable2 + varadr3 + block
-        #print(maptable2, block)
-        if x <= nbmapinrom[i]:
-            varadr3 = readpointer(hexrom, listadre[i])
-            varadr3 = readpointer(hexrom, add2hex(varadr3, 4*x))
-            writedatainrom(filename, maptable2, varadr3)
-        else:
-            varadr3 = conv_dec2hex(int(search(filename, 28, 00)))
-            writedatainrom(filename, maptable2, varadr3)
-        mapstable = mapstable + makepointer(varadr3)
-    if nbmap[i] <= nbmapinrom[i]:
-        mapstable = mapstable + "ffffffff" * (nbmapinrom[i] - nbmap[i])
-        varadr3 = readpointer(hexrom, listadre[i])
-        writedatainrom(filename, mapstable, varadr3)
-    else:
-        varadr3 = searchdatainrom(hexrom,freebyte(int(len(mapstable)/2)))
-        writedatainrom(filename, mapstable, varadr3)
-    banktable = banktable + makepointer(varadr3)
-if numbofbank <= numbofbankinrom:
-    banktable = banktable + "ffffffff" * (numbofbankinrom - numbofbank)
-    #print(banktable, len(banktable))
-    writedatainrom(filename, banktable, listadre[0])
-else:
-    varadr3 = varadr3 = conv_dec2hex(int(search(filename, len(banktable)/2, 00)))
-    writedatainrom(filename, banktable, varadr3)
+     varstr = os.getcwd()
+     varstr = varstr + '/' + 'maps' + '/' + str(i)
+     print(varstr)
+     nmap = nbmap[i]
+     mapstable = ''
+     for x in range(nmap):
+         varstr2 = varstr + '/' + str(x) + '.map'
+         print(varstr2)
+         noconnection = False
+         mapfilefinal = openRomRead(varstr2)
+         # Dimention map
+         largeurh = readRomData(mapfilefinal, '0x0', 4).decode(encoding="utf-8")
+         hauteurh = readRomData(mapfilefinal, '0x4', 4).decode(encoding="utf-8")
+         #print(largeurh)
+         largueurd = conv_hex2dec(largeurh[0:2])
+         hauteurd = conv_hex2dec(hauteurh[0:2])
+         # Tilesets
+         tileset1 = readRomData(mapfilefinal, '0x8', 4).decode(encoding="utf-8")
+         tileset2 = readRomData(mapfilefinal, '0xC', 4).decode(encoding="utf-8")
+         tileset1 = tileset1[6:8] + tileset1[4:6] + tileset1[2:4] + tileset1[0:2]
+         tileset2 = tileset2[6:8] + tileset2[4:6] + tileset2[2:4] + tileset2[0:2]
+         tileset1d = conv_hex2dec(tileset1)
+         tileset2d = conv_hex2dec(tileset2)
+         # Dimention Bloc de bordure
+         largbordh = readRomByte(mapfilefinal, '0x10').decode(encoding="utf-8")
+         hautbordh = readRomByte(mapfilefinal, '0x11').decode(encoding="utf-8")
+         largbordd = conv_hex2dec(largbordh)
+         hautbordd = conv_hex2dec(hautbordh)
+         # Bloc de bordure
+         blockbord = readRomData(mapfilefinal, '0x34', (largbordd*hautbordd*2)).decode(encoding="utf-8")
+         #print(blockbord)
+         #Données map
+         mapcoll = readRomData(mapfilefinal, add2hex('0x34', (largbordd*hautbordd*2)), (largueurd*hauteurd*2)).decode(encoding="utf-8")
+         #print(mapcoll)
+         # Bloc de donnnées ( musique , type de combat ...)
+         block = readRomData(mapfilefinal, 28, 11).decode(encoding="utf-8")
+         # Connexions
+         varhex = readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-2))).decode(encoding="utf-8")
+         varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-3))).decode(encoding="utf-8")
+         varhex = varhex + readRomByte(mapfilefinal, conv_dec2hex((int(len(mapfilefinal)/2)-4))).decode(encoding="utf-8")
+         #print(varhex)
+         connection = readRomData(mapfilefinal,varhex , (int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex)).decode(encoding="utf-8")
+         #print(connection)
+         #print(connection)
+         connectiond = int((((int(len(mapfilefinal)/2)-4)- conv_hex2dec(varhex))-4)/12)
+         #print(connectiond)
+         #print(connectiond)
+         #Scripts
+         nbscriptpnj = readRomByte(mapfilefinal, readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8") ).decode(encoding="utf-8")
+         nbwarp = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),1)).decode(encoding="utf-8")
+         nbscript = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),2)).decode(encoding="utf-8")
+         nbpancarte = readRomByte(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),3)).decode(encoding="utf-8")
+         scriptadr = readRomData(mapfilefinal, add2hex((readRomByte(mapfilefinal, '0x1D').decode(encoding="utf-8")+readRomByte(mapfilefinal, '0x1C').decode(encoding="utf-8")),4), 2).decode(encoding="utf-8")
+         scriptadr = scriptadr[2:4] +scriptadr[0:2]
+         Scriptdata = readRomData(mapfilefinal, scriptadr, (conv_hex2dec(nbscriptpnj)*24 + conv_hex2dec(nbwarp)*8 + conv_hex2dec(nbscript)*16 + conv_hex2dec(nbpancarte)*12)).decode(encoding="utf-8")
+         scriptpnj = Scriptdata[0:(conv_hex2dec(nbscriptpnj )* 24 * 2)]
+         warp = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2): (conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2)]
+         script = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) : (conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2)]
+         pancarte = Scriptdata[(conv_hex2dec(nbscriptpnj )* 24 * 2) + (conv_hex2dec(nbwarp) * 8 * 2) + (conv_hex2dec(nbscript) * 16 * 2): ]
+         #Construction de la maptable 1
+         maptable1 = largeurh + hauteurh
+         varadr = searchdatainrom(hexrom, blockbord)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
+             hexrom = write_in_hex_string(hexrom, varadr, blockbord)
+         maptable1 = maptable1 + makepointer(varadr)
+         varadr = searchdatainrom(hexrom, mapcoll)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(mapcoll))
+             hexrom = write_in_hex_string(hexrom, varadr, mapcoll)
+         maptable1 = maptable1 + makepointer(varadr)
+         varadr = makepointer(conv_dec2hex((tileset1d * 24) + tilesetstart))
+         #print(varadr)
+         maptable1 = maptable1 + varadr
+         varadr = makepointer(conv_dec2hex((tileset2d * 24) + tilesetstart))
+         maptable1 = maptable1 + varadr + mapfilefinal[32:36].decode(encoding="utf-8") +'0000'
+         #print(maptable1)
+         #print(vardec)
+         #Construction de la maptable 2
+         #print(scriptpnj)
+         #print(warp)
+         #print(script)
+         #print(pancarte)
+         varadr = searchdatainrom(hexrom, scriptpnj)
+         #print(scriptpnj)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(scriptpnj))
+             hexrom = write_in_hex_string(hexrom, varadr, scriptpnj)
+         varadr = makepointer(varadr)
+         if nbscriptpnj == '00':
+             varadr = '00000000'
+         scripttable = nbscriptpnj + nbwarp + nbscript + nbpancarte + varadr
+         varadr =  searchdatainrom(hexrom, warp)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(warp))
+             hexrom = write_in_hex_string(hexrom, varadr, warp)
+         varadr = makepointer(varadr)
+         if nbwarp == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
+         varadr = searchdatainrom(hexrom, script)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(script))
+             hexrom = write_in_hex_string(hexrom, varadr, script)
+         varadr = makepointer(varadr)
+         if nbscriptpnj == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
+         varadr = searchdatainrom(hexrom, pancarte)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(pancarte))
+             hexrom = write_in_hex_string(hexrom, varadr, pancarte)
+         varadr = makepointer(varadr)
+         if nbpancarte == '00':
+             varadr = '00000000'
+         scripttable =  scripttable + varadr
+         #print(scripttable)
+         #Event Script Table
+         eventscripttable = '00000000'
+         #Connexion Table
+         if connectiond != 0:
+             varadr = searchdatainrom(hexrom, connection)
+             if varadr == '0': 
+                 varadr = searchdatainrom(hexrom, 'f' * len(connection))
+                 hexrom = write_in_hex_string(hexrom, varadr, connection)
+                 varadr = makepointer(varadr)
+                 connexiontable = '0' + conv_dec2hex(connectiond) + '000000' + varadr
+         #Innsertion des differentes tables et création de maptable2
+         #print(maptable1)
+         varadr = searchdatainrom(hexrom, maptable1)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
+             hexrom = write_in_hex_string(hexrom, varadr, maptable1)
+         varadr = makepointer(varadr)
+         print(varadr)
+         maptable2 = varadr
+         varadr = searchdatainrom(hexrom, scripttable)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(scripttable))
+             hexrom = write_in_hex_string(hexrom, varadr, scripttable)
+         varadr = makepointer(varadr)
+         maptable2 = maptable2 + varadr
+         varadr = searchdatainrom(hexrom, eventscripttable)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(eventscripttable))
+             hexrom = write_in_hex_string(hexrom, varadr, eventscripttable)
+         varadr = makepointer(varadr)
+         maptable2 = maptable2 + varadr
+         if connectiond == 0:
+             varadr = searchdatainrom(hexrom, eventscripttable)
+             if varadr == '0': 
+                 varadr = searchdatainrom(hexrom, 'f' * len(eventscripttable))
+                 hexrom = write_in_hex_string(hexrom, varadr, eventscripttable)
+             varadr = makepointer(varadr)
+         else:
+             varadr = '00000000'
+         maptable2 = maptable2 + varadr + block
+         if x+1 == nmap:
+             bankend = True
+         
+     varadr = searchdatainrom(hexrom, maptable2)
+     if varadr == '0': 
+         varadr = searchdatainrom(hexrom, 'f' * len(maptable2))
+         hexrom = write_in_hex_string(hexrom, varadr, maptable2)
+     varadr = makepointer(varadr)
+     mapstable = mapstable + varadr
+     print(mapstable)
+     if bankend == True:
+         varadr = searchdatainrom(hexrom, mapstable)
+         print(varadr)
+         if varadr == '0': 
+             varadr = searchdatainrom(hexrom, 'f' * len(mapstable))
+             hexrom = write_in_hex_string(hexrom, varadr, mapstable)
+             print(varadr)
+         varadr = makepointer(varadr)
+         banktable = banktable + varadr
+         
+         bankend = False
+varadr = searchdatainrom(hexrom, banktable)
+if varadr == '0': 
+    varadr = searchdatainrom(hexrom, 'f' * len(banktable))
+    hexrom = write_in_hex_string(hexrom, varadr, banktable)
+varadr = makepointer(varadr)
+print(varadr)
+fonctiondecvar = 2*conv_hex2dec('5524C')
+hexrom = hexrom[0:fonctiondecvar] + varadr + hexrom[(fonctiondecvar+len(varadr)):]
+with open("BPRE0.gba","wb") as f:
+    f.write(unhexlify(hexrom))
+    f.close()
+
+             
+
+
 print('────────▄███████████▄────────')
 print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
 print('────███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███────')
