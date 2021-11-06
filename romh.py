@@ -47,7 +47,7 @@ def search(rom, length, start, byte="ff"):
        "rom" is a string, "length" is an int, "start" is an int and "byte" is a
        string"""
     whatToSearchFor = byte * length  # whatToSearchFor = byte to search for
-                                     # (usually ff) * length of bytes to search.
+    # (usually ff) * length of bytes to search.
     offset_found = rom.find(whatToSearchFor, start) / 2
     return offset_found
 
@@ -89,3 +89,4 @@ def insertSpacesBetweenBytes(hexstring):
         pos = i * 2
         new += hexstring[pos:pos + 2] + " "
     return new
+    
