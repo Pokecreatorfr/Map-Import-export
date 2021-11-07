@@ -125,8 +125,9 @@ for i in range(numbofbank):
         print(varstr2)
         noconnection = False
         mapfilefinal = openRomRead(varstr2)
-        mapa = mapformat(mapfilefinal)
-        print(mapa.largeurhex)
+        #mapA corresponbd à la map Actuelle
+        mapA = mapformat(mapfilefinal)
+        print(mapA.largeurhex)
 
 
 print('────────▄███████████▄────────')
