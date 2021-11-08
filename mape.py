@@ -112,6 +112,8 @@ class mapformat:
         #Connection 
         varhex = readRomByte(fichiermap, conv_dec2hex((int(len(fichiermap)/2)-2))).decode(encoding="utf-8") + readRomByte(fichiermap, conv_dec2hex((int(len(fichiermap)/2)-3))).decode(encoding="utf-8") + readRomByte(fichiermap, conv_dec2hex((int(len(fichiermap)/2)-4))).decode(encoding="utf-8")
         self.connection = readRomData(fichiermap, varhex, (int(len(fichiermap)/2)-4) - conv_hex2dec(varhex)).decode(encoding="utf-8")
+        if self.connexions == '':
+            self.noconnection = True
         #Scripts
         self.nbscriptpnj = readRomByte(fichiermap, readRomByte(fichiermap, '0x1D').decode(encoding="utf-8")+readRomByte(fichiermap, '0x1C').decode(encoding="utf-8")).decode(encoding="utf-8")
         self.nbwarp = readRomByte(fichiermap, add2hex((readRomByte(fichiermap, '0x1D').decode(encoding="utf-8")+readRomByte(fichiermap, '0x1C').decode(encoding="utf-8")), 1)).decode(encoding="utf-8")
