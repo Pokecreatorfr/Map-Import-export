@@ -128,6 +128,12 @@ for i in range(numbofbank):
         #mapA corresponbd à la map Actuelle
         mapA = mapformat(mapfilefinal)
         print(mapA.largeurhex)
+        maptable1 = mapA.largeurhex + mapA.hauteurhex
+        varadr = searchdatainrom(hexrom, mapA.blockbord)
+        if varadr == '0':
+            varadr = searchdatainrom(hexrom, 'f' * len(blockbord))
+            hexrom = write_in_hex_string(hexrom, varadr, blockbord)
+        maptable1 = maptable1 + varadr
 
 
 print('────────▄███████████▄────────')
