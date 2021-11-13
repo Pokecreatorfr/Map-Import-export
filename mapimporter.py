@@ -137,7 +137,7 @@ for i in range(numbofbank):
         hexrom = write_in_hex_string(hexrom, varadr, mapA.mapcoll)
         maptable1 = maptable1 + makepointer(varadr) + makepointer(conv_dec2hex(mapA.tileset1dec * 24 + tilesetstart)) + makepointer(conv_dec2hex(mapA.tileset2dec * 24 + tilesetstart)) + mapfilefinal[32:36].decode(encoding="utf-8") + '0000'
         # Construction de scripttable
-        if mapA.nbwarp == '00' and mapA.nbscript == '00' and mapA.nbpancarte == '00' and mapA.nbpnjscript =='00':
+        if mapA.nbwarp == '00' and mapA.nbscript == '00' and mapA.nbpancarte == '00' and mapA.nbscriptpnj =='00':
             scripttable = '0000000000000000000000000000000000000000'
         else :
             scripttable = mapA.nbscriptpnj + mapA.nbwarp + mapA.nbscript +  mapA.nbpancarte
@@ -167,8 +167,8 @@ for i in range(numbofbank):
                 scripttable = scripttable + makepointer(varadr)
         #Construction de conexiontable
         if mapA.noconnexion == False :
-            
-
+            varadr = searchdatainrom(hexrom, 'f' * len(mapA.connexion))
+            print("OUHOOO" , mapA.connexion)
 
 
 
