@@ -142,13 +142,32 @@ for i in range(numbofbank):
         else :
             scripttable = mapA.nbscriptpnj + mapA.nbwarp + mapA.nbscript +  mapA.nbpancarte
             if mapA.nbscriptpnj == '00':
-                scripttable = '00000000'
+                scripttable = scripttable + '00000000'
             else :
                 varadr = searchdatainrom(hexrom, 'f' * len(mapA.scriptpnj))
                 hexrom = write_in_hex_string(hexrom, varadr, mapA.scriptpnj)
                 scripttable = scripttable + makepointer(varadr)
-            print(mapA.nbwarp)
-
+            if mapA.nbwarp == '00':
+                scripttable = scripttable + '00000000'
+            else :
+                varadr = searchdatainrom(hexrom, 'f' * len(mapA.warp))
+                hexrom = write_in_hex_string(hexrom, varadr, mapA.warp)
+                scripttable = scripttable + makepointer(varadr)
+            if mapA.nbscript == '00':
+                scripttable = scripttable + '00000000'
+            else :
+                varadr = searchdatainrom(hexrom, 'f' * len(mapA.script))
+                hexrom = write_in_hex_string(hexrom, varadr, mapA.script)
+                scripttable = scripttable + makepointer(varadr)
+            if mapA.nbpancarte == '00':
+                scripttable = scripttable + '00000000'
+            else :
+                varadr = searchdatainrom(hexrom, 'f' * len(mapA.pancarte))
+                hexrom = write_in_hex_string(hexrom, varadr, mapA.pancarte)
+                scripttable = scripttable + makepointer(varadr)
+        #Construction de conexiontable
+        if mapA.noconnexion == False :
+            
 
 
 
