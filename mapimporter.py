@@ -167,8 +167,10 @@ for i in range(numbofbank):
                 scripttable = scripttable + makepointer(varadr)
         #Construction de conexiontable
         if mapA.noconnexion == False :
-            varadr = searchdatainrom(hexrom, 'f' * len(mapA.connexion))
+            varadr = searchdatainrom(hexrom, 'f' *( len(mapA.connexion)+4))
+            writedatainrom(hexrom, mapA.connexion + makepointer(varadr), varadr)
             print("OUHOOO" , mapA.connexion)
+        
 
 
 
