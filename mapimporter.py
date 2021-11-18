@@ -46,7 +46,7 @@ while itsabank == True:
         numbofbankinrom = numbofbankinrom - 1
     if itsabank == True:
         listadre[numbofbankinrom - 1] = banktablepointer
-#print(listadre)
+# print(listadre)
 #print('Il y a', str(numbofbankinrom), ' banques de map dans le jeu')
 for i in range(numbofbankinrom):
     vardec3 = 100000000
@@ -100,11 +100,11 @@ for i in range(numbofbankinrom):
         if itsamap == False:
             numbofmap = numbofmap - 1
         nbmapinrom[i] = numbofmap
-        #print(varhex)
-        #print(itsamap)
+        # print(varhex)
+        # print(itsamap)
         # print(numbofmap)
-    #print(nbmapinrom)
-#print(listadre)
+    # print(nbmapinrom)
+# print(listadre)
 varstr = os.getcwd() + '/maps'
 numbofbank = (len(next(os.walk(varstr))[1]))
 for i in range(numbofbank):
@@ -115,18 +115,19 @@ print('Il y a', str(numbofbankinrom), ' banques de map dans le jeu')
 
 filename = "BPRE0.gba"
 hexrom = openRomRead(filename).decode(encoding="utf-8")
+bankstable = ''
 for i in range(numbofbank):
     varstr = os.getcwd()
     varstr = varstr + '/' + 'maps' + '/' + str(i)
     print(varstr)
     nmap = nbmap[i]
-    mapstable = ''
+    banktable = ''
     for x in range(nmap):
         varstr2 = varstr + '/' + str(x) + '.map'
         print(varstr2)
         noconnection = False
         mapfilefinal = openRomRead(varstr2)
-        #mapA corresponbd à la map Actuelle
+        # mapA corresponbd à la map Actuelle
         mapA = mapformat(mapfilefinal)
         # Construction de maptable1
         maptable1 = mapA.largeurhex + mapA.hauteurhex
@@ -137,43 +138,70 @@ for i in range(numbofbank):
         hexrom = write_in_hex_string(hexrom, varadr, mapA.mapcoll)
         maptable1 = maptable1 + makepointer(varadr) + makepointer(conv_dec2hex(mapA.tileset1dec * 24 + tilesetstart)) + makepointer(conv_dec2hex(mapA.tileset2dec * 24 + tilesetstart)) + mapfilefinal[32:36].decode(encoding="utf-8") + '0000'
         # Construction de scripttable
-        if mapA.nbwarp == '00' and mapA.nbscript == '00' and mapA.nbpancarte == '00' and mapA.nbscriptpnj =='00':
+        if mapA.nbwarp == '00' and mapA.nbscript == '00' and mapA.nbpancarte == '00' and mapA.nbscriptpnj == '00':
             scripttable = '0000000000000000000000000000000000000000'
-        else :
-            scripttable = mapA.nbscriptpnj + mapA.nbwarp + mapA.nbscript +  mapA.nbpancarte
+        else:
+            scripttable = mapA.nbscriptpnj + mapA.nbwarp + mapA.nbscript + mapA.nbpancarte
             if mapA.nbscriptpnj == '00':
                 scripttable = scripttable + '00000000'
-            else :
+            else:
                 varadr = searchdatainrom(hexrom, 'f' * len(mapA.scriptpnj))
                 hexrom = write_in_hex_string(hexrom, varadr, mapA.scriptpnj)
                 scripttable = scripttable + makepointer(varadr)
             if mapA.nbwarp == '00':
                 scripttable = scripttable + '00000000'
-            else :
+            else:
                 varadr = searchdatainrom(hexrom, 'f' * len(mapA.warp))
                 hexrom = write_in_hex_string(hexrom, varadr, mapA.warp)
                 scripttable = scripttable + makepointer(varadr)
             if mapA.nbscript == '00':
                 scripttable = scripttable + '00000000'
-            else :
+            else:
                 varadr = searchdatainrom(hexrom, 'f' * len(mapA.script))
                 hexrom = write_in_hex_string(hexrom, varadr, mapA.script)
                 scripttable = scripttable + makepointer(varadr)
             if mapA.nbpancarte == '00':
                 scripttable = scripttable + '00000000'
-            else :
+            else:
                 varadr = searchdatainrom(hexrom, 'f' * len(mapA.pancarte))
                 hexrom = write_in_hex_string(hexrom, varadr, mapA.pancarte)
                 scripttable = scripttable + makepointer(varadr)
-        #Construction de conexiontable
-        if mapA.noconnexion == False :
-            varadr = searchdatainrom(hexrom, 'f' *( len(mapA.connexion)+4))
-            writedatainrom(hexrom, mapA.connexion + makepointer(varadr), varadr)
-            print("OUHOOO" , mapA.connexion)
+        # Construction de conexiontable
+        if mapA.noconnexion == False:
+            varadr = searchdatainrom(hexrom, 'f' * (len(mapA.connexion)+4))
+            write_in_hex_string(hexrom, mapA.connexion + makepointer(varadr), varadr)
+            connexiontable = makepointer(add2hex(varadr, int(len(mapA.connexion)/2)- 4))
+        #Création de la table de la map
+        varadr = searchdatainrom(hexrom, 'f' * len(maptable1))
+        write_in_hex_string(hexrom ,maptable1, varadr)
+        mapstable = makepointer(varadr)
+        varadr = searchdatainrom(hexrom, 'f' * len(scripttable))
+        write_in_hex_string(hexrom ,scripttable, varadr)
+        mapstable = mapstable + makepointer(varadr)
+        varadr = searchdatainrom(hexrom, '00000000')
+        mapstable = mapstable + makepointer(varadr)
+        if mapA.noconnexion == False:
+            varadr = searchdatainrom(hexrom, 'f' * len(connexiontable))
+            write_in_hex_string(hexrom ,connexiontable, varadr)
+            mapstable = mapstable + makepointer(varadr)+ mapA.block
+        else:
+            mapstable = mapstable + '00000000' + mapA.block
+        varadr = searchdatainrom(hexrom, 'f' * len(mapstable))
+        write_in_hex_string(hexrom ,mapstable, varadr)
+        banktable = banktable + makepointer(varadr)
+    varadr = searchdatainrom(hexrom, 'f' * len(banktable))
+    write_in_hex_string(hexrom ,banktable, varadr)
+    bankstable = bankstable + makepointer(varadr)
+varadr = searchdatainrom(hexrom, 'f' * len(bankstable))
+write_in_hex_string(hexrom ,bankstable, varadr)
+write_in_hex_string(hexrom ,makepointer(varadr), '05524C')
+
+with open("test.gba","wb") as f:
+    f.write(unhexlify(hexrom))
+    f.close()
         
 
-
-
+        
 print('────────▄███████████▄────────')
 print('─────▄███▓▓▓▓▓▓▓▓▓▓▓███▄─────')
 print('────███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███────')
