@@ -197,7 +197,7 @@ for i in range(numbofbank):
     bankstable = bankstable + makepointer(varadr)
 varadr = searchdatainrom(hexrom, 'f' * len(bankstable))
 hexrom = write_in_hex_string(hexrom,varadr, bankstable)
-hexrom = write_in_hex_string(hexrom, '05524C', makepointer(varadr))
+#hexrom = write_in_hex_string(hexrom, '05524C', makepointer(varadr))
 
 
 with open("test.gba", "wb") as f:
